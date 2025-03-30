@@ -1,26 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int N = 1e6 + 5;
-int n, a[N];
-long long sum = 0;
-stack <int> p;
+constexpr int N = 1e6 + 7;
+int n, a[N], lmax[N], rmax[N];
 int main() {
-	cin >> n;
-	for (int i = 1; i <= n; i++) {
-		cin >> a[i] 
-	}
-	for (int i = 1; i <= n; i++) {
-		while (!p.empty() && a[i] > a[p.top()]) {
-			int t = p.top();
-			p.pop();
-			if (!p.empty()) {
-				int l = p.top();
-				int w = i - 1 - l;
-				int h = min(a[i], a[l]) - a[t];
-				sum += 1ll * h * w;
-			}
-		}
-		p.push(i);
-	}
-	cout << sum << '\n';
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) scanf("%d", &a[i]);
+    lmax[1] = a[1];
+    for (int i = 2; i <= n; i++) lmax[i] = max(lmax[i - 1], a[i]);
+    rmax[n] = a[n];
+    for (int i = n - 1; i >= 1; i--) rmax[i] = max(rmax[i + 1], a[i]);
+    // 左右两边格子是没有办法存储雨水的
+    // 2 ~ n - 1
+    long long res = 0;
+    for (int i = 2; i <= n - 1; i++) {
+        res += max(0, min(lmax[i], rmax[i]) - a[i]);
+    }
+    printf("%lld\n", res);
+    return 0;
 }

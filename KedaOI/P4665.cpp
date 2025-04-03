@@ -1,25 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
-constexpr int N = INT_MAX - 1;
-int tong[N];
 int main() {
-    ios::sync_with_stdio(false), cin.tie(), cout.tie();
     int n;
     cin >> n;
-    for(int i = 0; i < n; i++) {
-        int num;
-        cin >> num;
-        if(num > 0) {
-            tong[num] = 1;
+    vector<int> nums(n);
+    for (int i = 0; i < n; ++i) cin >> nums[i];
+    for (int i = 0; i < n; ++i) {
+        while (nums[i] > 0 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) {
+            swap(nums[i], nums[nums[i] - 1]);
         }
     }
-    int min = 0;
-    for(int i = 0; i < N && tong[i] == 0; i++) {
-        min = i;
+    for (int i = 0; i < n; ++i) {
+        if (nums[i] != i + 1) {
+            cout << i + 1;
+            return 0;
+        }
     }
-    min++;
-    for(int i = min; i < N; i++) {
-        if(tong)
-    }
+    cout << n + 1;
     return 0;
 }

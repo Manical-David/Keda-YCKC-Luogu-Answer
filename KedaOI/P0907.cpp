@@ -1,23 +1,30 @@
-#include  <bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-int solve(vector<int>& b, vector<int>& add, int n, int m) {
-    sort(add.begin(), add.end());
-    int res = 0;
-    for (int i = 0; i < n; i++) {
-        int pos = b[i];
-        auto it = lower_bound(add.begin(), add.end(), pos); // 2分
-        int l1 = (it != add.end()) ? abs(*it - pos) : INT_MAX;
-        int r1 = (it != add.begin()) ? abs(*(it - 1) - pos) : INT_MAX;
-        res = max(res, min(l1, r1));
-    }
-    return res;
-}
+constexpr int N = 1e4 + 7;
+int n, m;
+int houses[N], heater[N];
+bool best(int i, int j) {
+    return (j == m - 1) ||
+           ((abs(heater[j] - houses[i])) 
+           < abs(heater[j + 1] - houses[i]));
+}    
 int main() {
-    int n, m;
+    ios::sync_with_stdio(false), cin.tie(), cout.tie();
     cin >> n >> m;
-    vector<int> b(n), add(m);
-    for (int i = 0; i < n; i++) cin >> b[i];
-    for (int i = 0; i < m; i++) cin >> add[i];
-    cout << solve(b, add, n, m) << endl;
+    for(int i = 0; i < n; i++) {
+        cin >> houses[i];
+    }
+    for(int i = 0; i < m; i++) {
+        cin >> heater[i];
+    }
+    sort(houses, houses + n);
+    sort(heater, heater + m);
+    int res = 0;
+    // 
+    for(int i = 0, j = 0; i < n; i++) {
+        while(!best(i, j)) j ++;
+        res = max(res, abs(heater[j] - houses[i]));
+    }
+    cout << res << '\n';
     return 0;
 }

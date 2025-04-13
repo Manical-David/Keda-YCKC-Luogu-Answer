@@ -1,13 +1,8 @@
-
 #include <bits/stdc++.h>
-
 using namespace std;
-
 constexpr int N = 10;
-
 int n;
 vector<int> path;
-
 // u代表当前选到了第几个元素
 void dfs(int u) {
     // 搜索树的终止条件
@@ -28,7 +23,6 @@ void dfs(int u) {
     path.pop_back();
     dfs(u + 1);
 }
-
 int main() {
     scanf("%d", &n);
     dfs(1);

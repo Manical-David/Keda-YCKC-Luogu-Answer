@@ -1,30 +1,42 @@
 #include <bits/stdc++.h>
 using namespace std;
-constexpr int N = 10;
-int n;
-vector<int> path;
-// u代表当前选到了第几个元素
-void dfs(int u) {
-    // 搜索树的终止条件
-    if (u == n + 1) {
-        // 说明我们已经选完n个元素了
-        for (const auto &it : path) {
-            printf("%d ", it);
-        }
-        printf("\n");
-        return;
+constexpr int N = 27;
+int n, v, weight[N], w[N];
+int main(int argc, char const *argv[]) {
+    ios::sync_with_stdio(false), cin.tie(), cout.tie();
+    // freopen("testin.in", "r", stdin);
+    // freopen("testout.out", "w", stdout);
+    cin >> n >> v;
+    for(int i = 0; i < n; i++) {
+        cin >> weight[i] >> w[i];
     }
-    // 搜索树的分裂条件
-    // 1. 选择当前元素
-    path.push_back(u);
-    dfs(u + 1);
-    // 2. 不选择当前元素
-    // 得把之前更新的信息回退掉
-    path.pop_back();
-    dfs(u + 1);
-}
-int main() {
-    scanf("%d", &n);
-    dfs(1);
+    int minn = 100;
+    for(int i = 0; i < (1 << n); i++) {
+        int t = 0, tmpv = 0;
+        for(int j = 0; j < n; j++) {
+            if((i >> j) & 1) {
+                t += w[j];
+                tmpv += weight[j];
+            }
+        }
+        if(tmpv <= v) {
+            minn = min(minn, abs(100 - t));
+        }
+    }
+    int res = 0;
+    for(int i = 0; i < (1 << n); i++) {
+        int t = 0, tmpv = 0, cnt = 0;
+        for(int j = 0; j < n; j++) {
+            if((i >> j) & 1) {
+                t += w[j];
+                tmpv += weight[j];
+                cnt++;
+            }
+        }
+        if(tmpv <= v && abs(100 - t) == minn) {
+            res = max(res, cnt);
+        }
+    }
+    cout << res << '\n';
     return 0;
 }

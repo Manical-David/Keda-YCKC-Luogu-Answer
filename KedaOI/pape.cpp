@@ -1,18 +1,32 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define int long long
-constexpr int N = 107;
-int f[N];
-int dfs(int u) {
-    if(u == 1) return 1;
-    if(u == 2) return 2;
-    if(f[u] != 0) return f[u];
-    int res = 0;
-    res = dfs(u - 1) + dfs(u -2);
-    f[u] = res;
-}
-int main() {
-    ios::sync_with_stdio(false), cin.tie(), cout.tie();
-    cout << dfs(100);
-    return 0;
-}
+// 暴力版本
+// #include <bits/stdc++.h>
+// using namespace std;
+// constexpr int N = 20;
+// int n, m, w[N], sum[N];
+// int ans = N;
+// void dfs(int u, int k) {
+//     if(u == n) {
+//         ans = min(ans, k);
+//         return;
+//     }
+//     for(int i = 0; i < k; i++) {
+//         if(sum[i] + w[u] <= m) {
+//             sum[i] += w[u]l
+//             dfs(u + 1, k);
+//             sum[i] -= w[u];
+//         }
+//     }
+//     sum[k] = w[u];
+//     dfs(u + 1, k + 1);
+//     sum[k] = 0;
+// }
+// int main() {
+//     ios::sync_with_stdio(false), cin.tie(), cout.tie();
+//     cin >> n >> m;
+//     for(int i = 0; i < n; i+) {
+//         cin >> w[i];
+//     }
+//     dfs(0, 0);
+//     cout << ans;
+//     return 0;
+// }

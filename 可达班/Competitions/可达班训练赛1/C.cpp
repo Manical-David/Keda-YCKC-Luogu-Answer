@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
-const long long MOD = 1e9 + 7;
-long long fpow(long long b, long long e, long long m) {
-    long long res = 1;
+const int MOD = 1e9 + 7;
+int fpow(int b, int e, int m) {
+    int res = 1;
     while (e > 0) {
         if (e % 2 == 1) {
             res = (res * b) % m;
@@ -16,16 +16,16 @@ int main() {
     ios::sync_with_stdio(false), cin.tie(nullptr);
     int n;
     cin >> n;
-    long long a[n];
+    int a[n];
     for (int i = 0; i < n; ++i) {
         cin >> a[i];
     }
-    long long rm[n];
-    rm[n-1] = LLONG_MAX;
+    int rm[n];
+    rm[n-1] = INT_MAX;
     for (int i = n-2; i >= 0; --i) {
         rm[i] = min(a[i+1], rm[i+1]);
     }
-    long long lm = LLONG_MIN;
+    int lm = INT_MIN;
     int m = 0;
     for (int i = 0; i < n; ++i) {
         bool lok = (i == 0) ? true : (lm <= a[i]);
@@ -38,7 +38,7 @@ int main() {
         }
     }
     int c = n - m;
-    long long ans;
+    int ans;
     if (c == 0) {
         ans = (fpow(2, n, MOD) - 1 + MOD) % MOD;
     } else {

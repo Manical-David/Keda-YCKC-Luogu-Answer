@@ -1,25 +1,24 @@
 #include <bits/stdc++.h>
 using namespace std;
-bool solve(int num, int t) {
-    if (t == 0 && num == 0) return true; // handle t=0 and num=0
-    while (num > 0) {
+bool containsDigit(int num, int t) {
+    if(t == 0 && num == 0) return true;
+    while(num > 0) {
         int digit = num % 10;
-        if (digit == t) return true;
+        if(digit == t) return true;
         num /= 10;
     }
-    return false;
+    return false;// 没找到t
 }
 int main() {
+    ios::sync_with_stdio(false), cin.tie(), cout.tie();
     int m, t;
     cin >> m >> t;
-    int num = 0;
-    int ans = 0;
-    while (num < m) {
-        ans++;
-        if (!solve(ans, t)) {
-            num++;
+    int realFloor = 0;
+    for(int i = 1; i <= m; i++) {
+        if(!containsDigit(i, t)) {
+            realFloor++;
         }
     }
-    cout << ans << endl;
+    cout << realFloor << '\n';
     return 0;
 }

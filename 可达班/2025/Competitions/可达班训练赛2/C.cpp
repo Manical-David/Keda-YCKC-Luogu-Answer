@@ -1,4 +1,3 @@
-// 别问我为什么用那么多assign，我也是被逼的
 #include <bits/stdc++.h>
 using namespace std;
 int n, m, t;

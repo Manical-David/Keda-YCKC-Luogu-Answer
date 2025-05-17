@@ -1,39 +1,51 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
 using namespace std;
-int a[10086][10086];
-inline void dfs(int i, int j) {
-    if(a[i][j - 1] == 2 || a[i][j + 1] == 2 || a[i - 1][j] == 2 || a[i + 1][j] == 2) {
-        a[i][j] = 2;
-        if(a[i][j + 1] != 1) a[i][j + 1] = 2;
-        if(a[i][j - 1] != 1) a[i][j - 1] = 2;
-        if(a[i + 1][j] != 1) a[i + 1][j] = 2;
-        if(a[i - 1][j] != 1) a[i - 1][j]
-    }
-}
+
 int main() {
-    ios::sync_with_stdio(false), cin.tie(), cout.tie();
-    for(int i = 1; i <= 10; i++) {
-        for(int j = 1; j <= 10; j++) {
-            cin >> a[i][j];
+    int m;
+    cin >> m;
+    
+    vector<int> reachable(1001, false); // 最大值为1000
+    for (int i = 0; i < m; ++i) {
+        int a;
+        cin >> a;
+        reachable[a] = true;
+    }
+    
+    int n;
+    cin >> n;
+    
+    // 向左扩展：找到最小的A，使得[A, n]中不包含可达元素
+    int A = n;
+    while (A > 1 && !reachable[A - 1]) {
+        --A;
+    }
+    
+    // 向右扩展：找到最大的B，使得[n, B]中不包含可达元素
+    int B = n;
+    while (B < 1000 && !reachable[B + 1]) {
+        ++B;
+    }
+    
+    int count = 0;
+    for (int i = A; i <= n; ++i) {
+        for (int j = n; j <= B; ++j) {
+            if (i < j) {
+                bool valid = true;
+                for (int k = i; k <= j; ++k) {
+                    if (reachable[k]) {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (valid) count++;
+            }
         }
     }
-    for(int i = 0; i <= 11; i++) {
-        a[i][0] = 2;
-        a[0][i] = 2;
-        a[11][i] = 2;
-        a[i][11] = 2;
-    }
-    for(int i = 1; i <= 10; i++) {
-        for(int j = 1; j <= 10; j++) {
-            if(a[i][j] != 1) dfs(i, j);
-        }
-    }
-    int ans = 0;
-    for(int i = 1; i <= 10; i++) {
-        for(int j = 1; j <= 10; j++) {
-            if(a[i][j] == 0) ans++;
-        }
-    }
-    cout << ans << '\n';
+    
+    cout << count << endl;
     return 0;
 }

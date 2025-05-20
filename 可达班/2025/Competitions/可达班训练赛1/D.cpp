@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int MAXN = 1e5 + 5;
+const int N = 1e5 + 5;
 const int INF = INT_MAX / 2;
 vector<vector<pair<int, int>>> adj;
 unordered_map<int, unordered_map<int, int>> dist;

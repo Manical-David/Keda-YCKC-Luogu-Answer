@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 1e5 + 5;
-const int INF = INT_MAX / 2;
+const int N = INT_MAX / 2;
 vector<vector<pair<int, int>>> adj;
 unordered_map<int, unordered_map<int, int>> dist;
 void floyd_warshall(int n) {
@@ -21,7 +21,7 @@ void floyd_warshall(int n) {
             if (dist[i].count(k) == 0) continue;
             for (int j = 1; j <= n; ++j) {
                 if (dist[k].count(j) == 0) continue;
-                if (dist[i][k] < INF && dist[k][j] < INF) {
+                if (dist[i][k] < N && dist[k][j] < N) {
                     dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
                 }
             }
@@ -44,15 +44,15 @@ int main() {
             adj[v].emplace_back(u, w);
         }
         floyd_warshall(n);
-        int mnLength = INF;
+        int mnLength = N;
         vector<int> mnE;
         for (int i = 1; i <= n; ++i) {
             for (int j = i + 1; j <= n; ++j) {
                 if (dist[i].count(j) == 0) continue;
-                if (dist[i][j] < INF) {
+                if (dist[i][j] < N) {
                     for (int k = j + 1; k <= n; ++k) {
                         if (dist[j].count(k) == 0 || dist[k].count(i) == 0) continue;
-                        if (dist[j][k] < INF && dist[k][i] < INF) {
+                        if (dist[j][k] < N && dist[k][i] < N) {
                             int length = dist[i][j] + dist[j][k] + dist[k][i];
                             if (length < mnLength) {
                                 mnLength = length;
@@ -70,7 +70,7 @@ int main() {
                 }
             }
         }
-        if (mnLength == INF) {
+        if (mnLength == N) {
             cout << -1 << endl;
         } else {
             sort(mnE.begin(), mnE.end());

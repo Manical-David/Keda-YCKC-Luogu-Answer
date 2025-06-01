@@ -15,3 +15,14 @@ int main() {
     printf("%lld\n", dfs(n));
     return 0;
 }
+/*
+long long res = 0, nowVal = 1;
+while(ture) {
+    if(nowVal * 2 > n) {
+        res += 2 * (n - nowVal);
+        break;
+    }
+    nowVal += 2;
+    
+}
+*/

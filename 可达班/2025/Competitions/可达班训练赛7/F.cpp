@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-vector<int> to_base3(int x, int n) {
+vector <int> to_base3(int x, int n) {
     vector<int> res(n);
     for (int i = 0; i < n; ++i) {
         res[i] = x % 3;

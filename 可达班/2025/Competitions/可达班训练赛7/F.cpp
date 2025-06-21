@@ -8,20 +8,20 @@ vector<int> to_base3(int x, int n) {
     }
     return res;
 }
-int from_base3(const vector<int>& dd) {
+int from_base3(const vector<int>& digits) {
     int res = 0;
-    for (int i = dd.size() - 1; i >= 0; --i) {
-        res = res * 3 + dd[i];
+    for (int i = digits.size() - 1; i >= 0; --i) {
+        res = res * 3 + digits[i];
     }
     return res;
 }
 int mirror(int x, int n) {
-    vector<int> dd = to_base3(x, n);
+    vector<int> digits = to_base3(x, n);
     for (int i = 0; i < n; ++i) {
-        if (dd[i] == 1) dd[i] = 2;
-        else if (dd[i] == 2) dd[i] = 1;
+        if (digits[i] == 1) digits[i] = 2;
+        else if (digits[i] == 2) digits[i] = 1;
     }
-    return from_base3(dd);
+    return from_base3(digits);
 }
 int main() {
     int n;
@@ -31,34 +31,24 @@ int main() {
     for (int i = 0; i < n; ++i) size *= 3;
     vector<int> pos(size);
     for (int i = 0; i < size; ++i) pos[i] = i;
-    int Rs = 0;
-    bool Ss = false;
-    for (char c : K) {
-        if (c == 'R') {
-            Rs = (Rs + 1) % size;
-        } else { // 'S'
-            for (int i = 0; i < size; ++i) {
-                int m = mirror(i, n);
-                if (i < m) {
-                    swap(pos[i], pos[m]);
-                }
-            }
-            if (Rs > 0) {
-                vector<int> new_pos(size);
-                for (int i = 0; i < size; ++i) {
-                    new_pos[(i + Rs) % size] = pos[i];
-                }
-                pos = new_pos;
-                Rs = 0;
-            }
-        }
+    vector<int> mirror_map(size);
+    for (int i = 0; i < size; ++i) {
+        mirror_map[i] = mirror(i, n);
     }
-    if (Rs > 0) {
-        vector<int> new_pos(size);
-        for (int i = 0; i < size; ++i) {
-            new_pos[(i + Rs) % size] = pos[i];
+    for (char c : K) {
+        if (c == 'S') {
+            for (int i = 0; i < size; ++i) {
+                if (i < mirror_map[i]) {
+                    swap(pos[i], pos[mirror_map[i]]);
+                }
+            }
+        } else {
+            vector<int> new_pos(size);
+            for (int i = 0; i < size; ++i) {
+                new_pos[(i + 1) % size] = pos[i];
+            }
+            pos = new_pos;
         }
-        pos = new_pos;
     }
     vector<int> ans(size);
     for (int i = 0; i < size; ++i) {
@@ -69,5 +59,6 @@ int main() {
         cout << ans[i];
     }
     cout << endl;
+
     return 0;
 }

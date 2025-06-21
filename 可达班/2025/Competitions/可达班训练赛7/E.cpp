@@ -11,7 +11,9 @@ long long get_min_num(const vector<int>& dd, int len, long long n) {
         }
         for (int d : dd) {
             if (pos == 0 && d == 0) continue; // 0s
-            if (lim && d < (n / (long long)pow(10, len - pos - 1)) % 10) continue;
+            long long p10 = 1;
+            for (int i = 0; i < len - pos - 1; ++i) p10 *= 10;
+            if (lim && d < (n / p10) % 10) continue;
             s[pos] = d + '0';
             dfs(pos + 1, lim && (d == (n / (long long)pow(10, len - pos - 1)) % 10));
         }
@@ -27,7 +29,7 @@ long long solve(long long n, int k) {
         long long ans = stoll(string(len, sn[0]));
         if (ans < n) {
             if (sn[0] == '9') {
-                ans = stoll(string(len + 1, '1'));
+                ans = stoll(string(len, char(sn[0] + 1)));
             } else {
                 ans = stoll(string(len, sn[0] + 1));
             }
@@ -37,11 +39,13 @@ long long solve(long long n, int k) {
     long long res = -1;
     vector<int> dd;
     for (int msk = 1; msk < (1 << 10); ++msk) {
-        if (__builtin_popcount(msk) > k) continue; // msk 二进制 1 cnt
+        if (__builtin_popcount(msk) > k) continue; // 跳过超过k个不同数字的掩码
         dd.clear();
         for (int d = 0; d < 10; ++d) {
             if (msk & (1 << d)) dd.push_back(d);
         }
+        if (dd.empty()) continue;
+        int min_d = *min_element(dd.begin(), dd.end());
         string s = sn;
         bool ok = true, changed = false;
         for (int i = 0; i < len; ++i) {
@@ -53,7 +57,7 @@ long long solve(long long n, int k) {
                     break;
                 } else {
                     s[i] = d + '0';
-                    for (int j = i + 1; j < len; ++j) s[j] = *min_element(dd.begin(), dd.end()) + '0';
+                    for (int j = i + 1; j < len; ++j) s[j] = min_d + '0';
                     found = true;
                     changed = true;
                     break;
@@ -67,14 +71,15 @@ long long solve(long long n, int k) {
         }
         if (ok) {
             long long val = stoll(s);
-            set<int> used;
+            unordered_set<int> used;
             for (char c : s) used.insert(c - '0');
             if ((int)used.size() <= k && val >= n) {
                 if (res == -1 || val < res) res = val;
             }
         }
-        //更长一位
-        if (res == -1) {
+        // 更长一位：如果无法用当前长度的数字构造满足条件的数，则需要考虑比原数多一位的最小可达数。
+        // 例如 n=999, k=1 时，无法用3位数构造答案，只能用4位数如1111。
+        if (res == -1 && !dd.empty()) {
             // 构造最小可达数
             if (dd[0] == 0 && dd.size() > 1) {
                 long long val = dd[1];
@@ -90,7 +95,9 @@ long long solve(long long n, int k) {
     return res;
 }
 
-int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
     ios::sync_with_stdio(false), cin.tie(), cout.tie();
     int t;
     cin >> t;

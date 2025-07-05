@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int MOD = 1e9 + 7;
+const int MOO = 1e9 + 7;
 int fpow(int b, int e, int m) {
     int res = 1;
     while (e > 0) {
@@ -40,9 +40,9 @@ int main() {
     int c = n - m;
     int ans;
     if (c == 0) {
-        ans = (fpow(2, n, MOD) - 1 + MOD) % MOD;
+        ans = (fpow(2, n, MOO) - 1 + MOO) % MOO;
     } else {
-        ans = fpow(2, m, MOD);
+        ans = fpow(2, m, MOO);
     }
     cout << ans << endl;
     return 0;

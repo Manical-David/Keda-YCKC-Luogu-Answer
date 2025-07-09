@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 const int N = 1e4 + 20;
 int n, m, vol, p[N], v[N], w[N], f[N];

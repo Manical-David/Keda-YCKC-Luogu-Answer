@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-struct State {
+struct state {
     int s, n, m, step;
 };
 int S, N, M;
@@ -11,7 +11,7 @@ bool tar(int s, int n, int m) {
            (m == half && (s == half || n == half));
 }
 int bfs() {
-    queue<State> q;
+    queue<state> q;
     set<tuple<int, int, int>> vis;
     q.push({S, 0, 0, 0});
     vis.insert({S, 0, 0});

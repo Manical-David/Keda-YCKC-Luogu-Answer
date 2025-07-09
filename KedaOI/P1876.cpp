@@ -21,7 +21,6 @@ void digikstra(int start) {
         st[ver] = true;
         for (const auto &it : g[ver]) {
             int to = it.to, val = it.val;
-            // 起点直接到to点和起点先到ver再到to点哪一个更优秀
             if (dist[to] > dist[ver] + val) {
                 dist[to] = dist[ver] + val;
                 heap.push(make_pair(dist[to], to));

@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 const int INF = 1e9;
 const int MAX = 1010;
 int dx[4] = {1, -1, 0, 0};
@@ -11,7 +10,6 @@ struct Node {
         return cost > rhs.cost;
     }
 };
-
 int main() {
     int N, sx, sy;
     cin >> N >> sx >> sy;

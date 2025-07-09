@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
-constexpr int MAXN = 150005;
-vector<int> G[MAXN];  // 邻接表
-int vis[MAXN], T = 0; // 用时间戳方式标记访问
+constexpr int N = 150005;
+vector<int> G[N];  // 邻接表
+int vis[N], T = 0; // 用时间戳方式标记访问
 int N, M, Q;
 int bfs(int start, int k) {
     T++;

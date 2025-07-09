@@ -14,13 +14,13 @@ int main() {
         int a, b;
         cin >> a >> b;
         int pa = find(a), pb = find(b);
-        if(pa != pb){
+        if(pa != pb) {
             v[pb] += v[pa];
             w[pb] += w[pa];
             p[pa] = pb;
         }
     }
-    for(int i = 1; i <= n; i++){
+    for(int i = 1; i <= n; i++) {
     	for(int j = vol; j >= v[i]; j--){
             int pi = find(i);
             if(i == pi) f[j] = max(f[j], f[j - v[i]] + w[i]);

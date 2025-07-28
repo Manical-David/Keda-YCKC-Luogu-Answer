@@ -1,47 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
-using ll = long long;
-struct DSU {
-    vector<int> p, sz;
-    vector<ll> edges;
-    DSU(int n): p(n + 1), sz(n + 1, 1), edges(n + 1, 0) {
-        iota(p.begin(), p.end(), 0);
-    }
-    int find(int x) {
-        return p[x] == x ? x : p[x] = find(p[x]);
-    }
-    void unite(int a, int b) {
-        a = find(a);
-        b = find(b);
-        if (a == b) {
-            edges[a]++;
-            return;
+constexpr int N = 1e5 + 7;
+int n, m, cnt = 0;
+vector <int> g[N];
+bool st[N];
+void dfs(int u) {
+    st[u] = true;
+    for(int v : g[u]) {
+        if(!st[v]) {
+            dfs(v);
         }
-        if (sz[a] < sz[b]) swap(a,b);
-        p[b] = a;
-        sz[a] += sz[b];
-        edges[a] += edges[b] + 1;
     }
-};
-int main(){
+}
+int main() {
     ios::sync_with_stdio(false), cin.tie(), cout.tie();
-    int n, m;
     cin >> n >> m;
-    DSU dsu(n);
-    for (int i = 0; i < m; i++){
-        int u, v, z;
-        cin >> u >> v >> z;
-        dsu.unite(u, v);
+    for(int i = 0; i < m; i++) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        g[u].push_back(v);
+        g[v].push_back(u);
     }
-    ll ans = 0;
-    vector <bool> vis(n + 1, false);
     for(int i = 1; i <= n; i++) {
-        int root = dsu.find(i);
-        if(!vis[root]) {
-            vis[root] = true;
-            ans++;
+        if(!st[i]) {
+            dfs(i);
+            ++cnt;
         }
     }
-    cout << ans << '\n';
+    cout << cnt << '\n';
     return 0;
 }

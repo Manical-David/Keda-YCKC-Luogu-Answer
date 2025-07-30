@@ -13,7 +13,7 @@ int main() {
     }
     int offset = 0;
     bool flipped = false;
-    for (char c : s) {
+    for(char c : s) {
         if (c == 'r') {
             offset = (offset + 1) % n;
         } else if (c == 'f') {

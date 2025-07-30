@@ -10,9 +10,7 @@ int getlength(vector<int>& trees, int h) {
     return sum;
 }
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    cout.tie(0);
+    ios::sync_with_stdio(false), cin.tie(), cout.tie();
     int n, m;
     cin >> n >> m;
     vector<int> trees(n);

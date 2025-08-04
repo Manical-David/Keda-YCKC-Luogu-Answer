@@ -1,15 +1,15 @@
 #include <bits/stdc++.h>
 using namespace std;
-int n, l, r, k, m;
+int n, l, t, k, m;
 vector<int> w;
 vector<unordered_set<int>> c;
 unordered_set<int> Mset;
 int must_sum = 0;
 int res = 0;
 void dfs(int pos, int ans, unordered_set<int>& chosed, const vector<int>& chose) {
-    if (ans > r) return; // 剪枝：当前和已经超过上限
+    if (ans > t) return; // 剪枝：当前和已经超过上限
     if (pos == chose.size()) {
-        if (ans >= l && ans <= r) {
+        if (ans >= l && ans <= t) {
             res++;
         }
         return;
@@ -32,7 +32,7 @@ void dfs(int pos, int ans, unordered_set<int>& chosed, const vector<int>& chose)
     }
 }
 int main() {
-    cin >> n >> l >> r;
+    cin >> n >> l >> t;
     w.resize(n);
     for (int i = 0; i < n; ++i) {
         cin >> w[i];

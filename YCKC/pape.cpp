@@ -1,20 +1,49 @@
 #include <bits/stdc++.h>
 using namespace std;
-string in, post;
-void build(int inL, int inR, int postL, int postR) {
-    if(inL > inR || postL > postR) return;
-    char root = post[postR];
-    cout << root;
-    int rootIndex = in.find(root, inL);
-    int leftSize = rootIndex - inL;
-    build(inL, rootIndex - 1, postL, postL + leftSize - 1);
-    build(rootIndex + 1, inR, postL + leftSize, postR - 1);
-}
+struct Edge {
+    int u, v, c;
+};
 int main() {
-    cin >> in >> post;
-    int n = in.size();
-    build(0, n - 1, 0, n - 1);
-    cout << endl;
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, q;
+        cin >> n >> q;
+        vector<int> a(n + 1);
+        for (int i = 1; i <= n; ++i) {
+            cin >> a[i];
+        }
+        vector<vector<pair<int, int>>> adj(n + 1);
+        vector<Edge> edges;
+        long long total = 0;
+        for (int i = 0; i < n - 1; ++i) {
+            int u, v, c;
+            cin >> u >> v >> c;
+            adj[u].emplace_back(v, c);
+            adj[v].emplace_back(u, c);
+            edges.push_back({u, v, c});
+            if (a[u] != a[v]) {
+                total += c;
+            }
+        }
+        while (q--) {
+            int v, x;
+            cin >> v >> x;
+            for (auto [u, c] : adj[v]) {
+                if (a[v] != a[u]) {
+                    total -= c;
+                }
+            }
+            a[v] = x;
+            for (auto [u, c] : adj[v]) {
+                if (a[v] != a[u]) {
+                    total += c;
+                }
+            }
+            cout << total << '\n';
+        }
+    }
     return 0;
-}
 }

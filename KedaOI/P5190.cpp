@@ -23,7 +23,7 @@ signed main() {
             }
             f[i][j][1] = max(f[i - 1][j][1], f[i - 1][j][0] - a[i]);
         }
-    }
+    } 
     cout << max({f[n][0][0], f[n][1][0], f[n][2][0]}) << '\n';
     return 0;
 }

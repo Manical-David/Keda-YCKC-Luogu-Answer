@@ -50,12 +50,12 @@
 #pragma GCC optimize("-fdelete-null-pointer-checks")
 #include <bits/stdc++.h>
 using namespace std;
-bool Index(const vector<vector<int>> &index, const string &word) {
+bool Index(const vector<vector<int>> &idx, const string &word) {
     int prev = -1;
     for (char c : word) {
-        if (index[c - 'a'].empty()) return false; 
-        auto it = upper_bound(index[c - 'a'].begin(), index[c - 'a'].end(), prev);
-        if (it == index[c - 'a'].end()) return false;
+        if (idx[c - 'a'].empty()) return false; 
+        auto it = upper_bound(idx[c - 'a'].begin(), idx[c - 'a'].end(), prev);
+        if (it == idx[c - 'a'].end()) return false;
         prev = *it;
     }
     return true;
@@ -70,13 +70,13 @@ int main() {
     for (int i = 0; i < n; i++) {
         cin >> words[i];
     }
-    vector<vector<int>> index(26);
+    vector<vector<int>> idx(26);
     for (int i = 0; i < s.size(); i++) {
-        index[s[i] - 'a'].push_back(i);
+        idx[s[i] - 'a'].push_back(i);
     }
     int ans = 0;
     for (const string &word : words) {
-        if (Index(index, word)) {
+        if (Index(idx, word)) {
             ans++;
         }
     }

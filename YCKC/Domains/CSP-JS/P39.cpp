@@ -1,45 +1,44 @@
 #include <bits/stdc++.h>
 using namespace std;
-long long getx(vector<int> sa, vector<int> la, long long mid) {
-    long long cnt = 0;
-    int n = sa.size();
-    for (int i = 0; i < n; i++) {
-        long long minn = (mid + sa[i] - 1) / sa[i];
-        auto it = lower_bound(la.begin(), la.end(), minn);
-        cnt += la.end() - it;
-    }
-    return cnt;
-}
-long long fnd(vector<int> A, vector<int> B, int k) {
-    sort(A.begin(), A.end());
-    sort(B.begin(), B.end());
-    long long minn = (long long)A[0] * B[0];
-    long long maxx = (long long)A.back() * B.back();
-    vector<int> sa = A.size() <= B.size() ? A : B;
-    vector<int> la = A.size() <= B.size() ? B : A;
-    while (minn < maxx) {
-        long long mid = minn + (maxx - minn + 1) / 2;
-        long long cnt = getx(sa, la, mid);
-        if (cnt >= k) {
-            minn = mid;
-        } else {
-            maxx = mid - 1;
+long long a[100005], b[100005], n, m, k;
+bool ch(long long x) {
+    long long int cnt = 0;
+    for (int i = 1; i <= n; i++) {
+        if (a[i] * b[m] <= x)
+            continue;
+        if (a[i] * b[1] > x) {
+            cnt += m;
+            continue;
         }
+        long long l = 1, r = m, mid;
+        while (l < r) {
+            mid = (l + r) / 2;
+            if (a[i] * b[mid] > x)
+                r = mid;
+            else
+                l = mid + 1;
+        }
+        cnt += m - r + 1;
     }
-    return minn;
+    return cnt < k;
 }
 int main() {
-    ios::sync_with_stdio(false), cin.tie(), cout.tie();
-    int n, m, k;
-    cin >> n >> m >> k;
-    vector<int> A(n);
-    vector<int> B(m);
-    for (int i = 0; i < n; i++) {
-        cin >> A[i];
+    cin >> n >> m;
+    cin >> k;
+    for (int i = 1; i <= n; i++)
+        cin >> a[i];
+    for (int i = 1; i <= m; i++)
+        cin >> b[i];
+    sort(a + 1, a + n + 1);
+    sort(b + 1, b + m + 1);
+    long long int l = a[1] * b[1], r = a[n] * b[m], mid;
+    while (l < r) {
+        mid = (l + r) / 2;
+        if (ch(mid))
+            r = mid;
+        else
+            l = mid + 1;
     }
-    for (int i = 0; i < m; i++) {
-        cin >> B[i];
-    }
-    cout << fnd(A, B, k) << '\n';
+    cout << r;
     return 0;
 }

@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int MAXN = 100;
-long long mem[MAXN + 1];
+const int N = 100;
+long long mem[N + 1];
 bool is_prime(int n) {
     if (n <= 1) return false;
     if (n == 2) return true;

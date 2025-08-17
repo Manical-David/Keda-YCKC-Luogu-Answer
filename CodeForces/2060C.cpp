@@ -1,34 +1,25 @@
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
+constexpr int N = 5e5 + 5;
+int a[N];
 void solve() {
-    map<int, int> to;
-    to.clear(); // no clear, clear bear.┭┮﹏┭┮
-    int n, k;
+    memset(a, 0, sizeof(a));
+    int sc = 0, n, k;
     cin >> n >> k;
-    vector <int> x(n);
-    for (int i = 0; i < n; i++) {
-        cin >> x[i];
-        to[x[i]]++;
+    for(int i = 0; i < n; i++) {
+        int x;
+        cin >> x;
+        a[x]++;
     }
-    int ans = 0;
-    for (auto it : to) {
-        int x = it.first, y = it.second;
-        if (!y)
+    for(int i = 0; i < k / 2 + 1; i++) {
+        if(i << 1 == k) {
+            sc += a[i] >> 1; 
             continue;
-        if (k - x == x) {
-            ans += y / 2;
         }
-        else {
-            if (to[k - x] > 0) {
-                int sub = min(to[k - x], to[x]);
-                ans += sub;
-                to[k - x] -= sub;
-                to[x] -= sub;
-            }
-        }
+        sc += min(a[i], a[k - i]);
     }
-    cout << ans << '\n';
+    cout << sc << '\n';
 }
 signed main() {
     ios::sync_with_stdio(false), cin.tie(0);
@@ -39,3 +30,9 @@ signed main() {
     }
     return 0;
 }
+/*
+策略
+A 是先手，所以考虑他随便选了一个，此时看 B，他一定会尽量选可以相加为 k 的，如果没有可以选的就可以选同样对答案没有贡献的。
+结果
+答案是一组符合条件的数中数量少的那个然后相加。
+*/

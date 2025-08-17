@@ -21,7 +21,8 @@
         "any": "cpp",
         "flat_map": "cpp",
         "flat_set": "cpp",
-        "system_error": "cpp"
+        "system_error": "cpp",
+        "ratio": "cpp"
     },
     "C_Cpp.default.compilerPath": "C:/msys64/ucrt64/bin/g++.exe",
 }

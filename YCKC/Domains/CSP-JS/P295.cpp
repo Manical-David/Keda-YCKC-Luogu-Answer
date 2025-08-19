@@ -1,14 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
-struct Node {
+struct node {
     int val;
     int nxt;
-    Node() : val(0), nxt(-1) {}
-    Node(int v) : val(v), nxt(-1) {}
+    node() : val(0), nxt(-1) {}
+    node(int v) : val(v), nxt(-1) {}
 };
 int main() {
     const int MAX_SIZE = 100010;
-    vector<Node> nodes(MAX_SIZE);
+    vector<node> nodes(MAX_SIZE);
     int head = -1;
     int idx = 0;
     vector<int> ord;
@@ -20,7 +20,7 @@ int main() {
         if (op == 'H') {
             int x;
             cin >> x;
-            nodes[idx] = Node(x);
+            nodes[idx] = node(x);
             nodes[idx].nxt = head;
             head = idx;
             ord.push_back(idx);
@@ -43,7 +43,7 @@ int main() {
             int k, x;
             cin >> k >> x;
             int preidx = ord[k - 1];
-            nodes[idx] = Node(x);
+            nodes[idx] = node(x);
             nodes[idx].nxt = nodes[preidx].nxt;
             nodes[preidx].nxt = idx;
             ord.push_back(idx);

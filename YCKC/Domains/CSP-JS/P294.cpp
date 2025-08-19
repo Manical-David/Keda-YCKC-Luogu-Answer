@@ -1,15 +1,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 constexpr int N = 100010;
-struct Node {
+struct node {
     int val;
     int prev, next;
-    Node() : val(0), prev(-1), next(-1) {}
-    Node(int v) : val(v), prev(-1), next(-1) {}
+    node() : val(0), prev(-1), next(-1) {}
+    node(int v) : val(v), prev(-1), next(-1) {}
 };
 int main() {
     ios::sync_with_stdio(false), cin.tie(), cout.tie();
-    vector<Node> nodes(N);
+    vector<node> nodes(N);
     int head = -1;
     int tail = -1;
     int idx = 0;
@@ -22,7 +22,7 @@ int main() {
         if (op == "L") {
             int x;
             cin >> x;
-            nodes[idx] = Node(x);
+            nodes[idx] = node(x);
             if (head == -1) {
                 head = tail = idx;
             } else {
@@ -35,7 +35,7 @@ int main() {
         } else if (op == "R") {
             int x;
             cin >> x;
-            nodes[idx] = Node(x);
+            nodes[idx] = node(x);
             if (tail == -1) {
                 head = tail = idx;
             } else {
@@ -68,7 +68,7 @@ int main() {
             cin >> k >> x;
             int cur = ins[k - 1];
             int p = nodes[cur].prev;
-            nodes[idx] = Node(x);
+            nodes[idx] = node(x);
             nodes[idx].prev = p;
             nodes[idx].next = cur;
             nodes[cur].prev = idx;
@@ -85,7 +85,7 @@ int main() {
             cin >> k >> x;
             int cur = ins[k - 1];
             int n = nodes[cur].next;
-            nodes[idx] = Node(x);
+            nodes[idx] = node(x);
             nodes[idx].prev = cur;
             nodes[idx].next = n;
             nodes[cur].next = idx;

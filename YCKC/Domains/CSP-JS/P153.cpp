@@ -4,10 +4,10 @@
 using namespace std;
 
 // 三维坐标结构体
-struct Point {
+struct node {
     int l, r, c;  // 层、行、列
-    int steps;    // 到达该点的步数
-    Point(int l_, int r_, int c_, int s_) : l(l_), r(r_), c(c_), steps(s_) {}
+    int st;    // 到达该点的步数
+    node(int l_, int r_, int c_, int s_) : l(l_), r(r_), c(c_), st(s_) {}
 };
 
 // 6个可能的移动方向：上下、左右、前后
@@ -26,17 +26,17 @@ int L, R, C;  // 层、行、列
 
 // BFS搜索最短路径
 int bfs(int sl, int sr, int sc) {
-    queue<Point> q;
-    q.push(Point(sl, sr, sc, 0));
+    queue<node> q;
+    q.push(node(sl, sr, sc, 0));
     vis[sl][sr][sc] = true;
     
     while (!q.empty()) {
-        Point cur = q.front();
+        node cur = q.front();
         q.pop();
         
         // 检查是否到达终点
         if (mp[cur.l][cur.r][cur.c] == 'E') {
-            return cur.steps;
+            return cur.st;
         }
         
         // 尝试6个方向的移动
@@ -49,7 +49,7 @@ int bfs(int sl, int sr, int sc) {
             if (nl >= 0 && nl < L && nr >= 0 && nr < R && nc >= 0 && nc < C) {
                 if (mp[nl][nr][nc] != '#' && !vis[nl][nr][nc]) {
                     vis[nl][nr][nc] = true;
-                    q.push(Point(nl, nr, nc, cur.steps + 1));
+                    q.push(node(nl, nr, nc, cur.st + 1));
                 }
             }
         }

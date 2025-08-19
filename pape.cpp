@@ -1,123 +1,94 @@
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
+#define Madical_david signed
+#define is_so_cute main
 using namespace std;
-int read()
+constexpr int N = 310;
+struct node
 {
-    int x = 0, f = 1;
-    char c = getchar();
-    while (!isdigit(c))
+    int x;
+    int y;
+    int stp;
+};
+int n, m;
+char A[N][N];
+int Y[N][N];
+int M[N][N];
+int bfs1(int x, int y)
+{
+    if(x + 1 < 1 || cnt.x > n || cnt.y < 1)
+    queue<node> q;
+    q.push({x, y, 0});
+    while (!q.empty())
     {
-        if (c == '-')
-        {
-            f = -1;
-        }
-        c = getchar();
+        node gt = q.front();
+        q.pop();
+        if (gt.x < 1 || gt.y < 1 || gt.x > n || gt.y > m)
+            continue;
+        if (A[gt.x][gt.y] == '#')
+            continue;
+        if (Y[gt.x][gt.y] != 0x3f3f3f3f)
+            continue;
+        Y[gt.x][gt.y] = gt.stp;
+        q.push({gt.x + 1, gt.y, gt.stp + 1});
+        q.push({gt.x - 1, gt.y, gt.stp + 1});
+        q.push({gt.x, gt.y + 1, gt.stp + 1});
+        q.push({gt.x, gt.y - 1, gt.stp + 1});
     }
-    while (isdigit(c))
-    {
-        x = x * 10 + c - '0';
-        c = getchar();
-    }
-    return x * f;
 }
-
-vector<int> a(const vector<int> &x, const vector<int> &y)
+int bfs2(int x, int y)
 {
-    vector<int> r;
-    int c = 0, i = 0;
-    while (i < x.size() || i < y.size() || c)
+    queue<node> q;
+    q.push({x, y, 0});
+    while (!q.empty())
     {
-        int s = c;
-        if (i < x.size())
-            s += x[i];
-        if (i < y.size())
-            s += y[i];
-        r.push_back(s % 10);
-        c = s / 10;
-        i++;
+        node gt = q.front();
+        q.pop();
+        if (gt.x < 1 || gt.y < 1 || gt.x > n || gt.y > m)
+            continue;
+        if (A[gt.x][gt.y] == '#')
+            continue;
+        if (M[gt.x][gt.y] != 0x3f3f3f3f)
+            continue;
+        M[gt.x][gt.y] = gt.stp;
+        q.push({gt.x + 1, gt.y, gt.stp + 1});
+        q.push({gt.x - 1, gt.y, gt.stp + 1});
+        q.push({gt.x, gt.y + 1, gt.stp + 1});
+        q.push({gt.x, gt.y - 1, gt.stp + 1});
     }
-    return r;
 }
-
-vector<int> m1(const vector<int> &x, int b)
+Madical_david is_so_cute()
 {
-    vector<int> r;
-    int c = 0;
-    for (int i = 0; i < x.size() || c; i++)
+    int t;
+    scanf("%d", &t);
+    while (t--)
     {
-        long long p = c;
-        if (i < x.size())
-            p += (long long)x[i] * b;
-        r.push_back(p % 10);
-        c = p / 10;
-    }
-    return r;
-}
-
-vector<int> m2(const vector<int> &x, const vector<int> &y)
-{
-    vector<int> r(x.size() + y.size(), 0);
-    for (int i = 0; i < x.size(); i++)
-    {
-        int c = 0;
-        for (int j = 0; j < y.size() || c; j++)
+        memset(M, 0x3f, sizeof M);
+        memset(Y, 0x3f, sizeof Y);
+        scanf("%d%d", &n, &m);
+        int x, y, xx, yy;
+        for (int i = 1; i <= n; i++)
         {
-            long long p = r[i + j] + c;
-            if (j < y.size())
-                p += (long long)x[i] * y[j];
-            r[i + j] = p % 10;
-            c = p / 10;
+            for (int j = 1; j <= m; j++)
+            {
+                scanf(" %c", &A[i][j]);
+                if (A[i][j] == 'Y')
+                    x = i, y = j;
+                if (A[i][j] == 'M')
+                    xx = i, yy = j;
+            }
         }
-    }
-    while (r.size() > 1 && r.back() == 0)
-        r.pop_back();
-    return r;
-}
-
-#define min(a, b) a < b ? a : b
-int main()
-{
-    int n;
-    scanf("%d", &n);
-    vector<int> f1 = {1}, f2 = {2}, j1 = {1}, j2 = {2}, f, j;
-    vector<int> c;
-    for (int i = 1; i < n; i++)
-    {
-        if (i == 1)
-            c = m2(f1, j1);
-        else if (i == 2)
-            c = m2(f2, j2);
-        else
+        bfs1(x, y);
+        bfs2(xx, yy);
+        int ans = INT_MAX;
+        for (int i = 1; i <= n; i++)
         {
-            f = a(f2, f1);
-            j = m1(j2, i);
-            f1 = f2;
-            f2 = f;
-            j2 = j;
+            for (int j = 1; j <= m; j++)
+            {
+                if (A[i][j] == '@' && M[i][j] != 0x3f3f3f3f && Y[i][j] != 0x3f3f3f3f)
+                    ans = min(M[i][j] + Y[i][j], ans);
+            }
         }
-    }
-    if (n == 1)
-        c = m2(f1, j1);
-    else if (n == 2)
-        c = m2(f2, j2);
-    else
-        f = a(f2, f1), j = m1(j2, n), c = m2(f, j);
-    bool is = 1;
-    for (int i = min(99, (int)c.size() - 1); i >= 0; i--)
-    {
-        if (c[i] != 0)
-        {
-            is = 0;
-            break;
-        }
-    }
-    for (int i = min(99, (int)c.size() - 1); i >= 0; i--)
-    {
-        printf("%d", c[i]);
-    }
-    if (is)
-    {
-        printf("\n%d %d", c[c.size() - 1], c.size() - 1);
+        printf("%d\n", 11 * ans);
     }
     return 0;
 }

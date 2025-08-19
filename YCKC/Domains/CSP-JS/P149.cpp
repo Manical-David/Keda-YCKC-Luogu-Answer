@@ -7,14 +7,12 @@ int g[N][N];
 bool vis[N][N];
 int dx[] = {1, -1, 0, 0};
 int dy[] = {0, 0, 1, -1};
-int MDx[] = {0, 1, -1, 0, 0};
-int MDy[] = {0, 0, 0, 1, -1};
-
+int mdx[] = {0, 1, -1, 0, 0};
+int mdy[] = {0, 0, 0, 1, -1};
 struct node {
     int x, y, time;
     node(int x_, int y_, int t_) : x(x_), y(y_), time(t_) {}
 };
-
 int main() {
     int M;
     cin >> M;
@@ -27,8 +25,8 @@ int main() {
         int x, y, t;
         cin >> x >> y >> t;
         for (int d = 0; d < 5; ++d) {
-            int nx = x + MDx[d];
-            int ny = y + MDy[d];
+            int nx = x + mdx[d];
+            int ny = y + mdy[d];
             if (nx >= 0 && ny >= 0 && nx < N && ny < N) {
                 if (t < g[nx][ny]) {
                     g[nx][ny] = t;

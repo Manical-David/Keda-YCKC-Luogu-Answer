@@ -1,29 +1,31 @@
 #include <bits/stdc++.h>
-#define int long long
 using namespace std;
-constexpr int N = 1e5 + 10;
-int n, a[N], f[N][3][2];
-signed main() {
-    ios::sync_with_stdio(false), cin.tie(0);
+int solve(vector<int>& a) {
+    int n = a.size();
+    if (n < 2) return 0;
+    vector<int> buy1(n, 0);   // 第一次买入
+    vector<int> sell1(n, 0);  // 第一次卖出
+    vector<int> buy2(n, 0);   // 第二次买入
+    vector<int> sell2(n, 0);  // 第二次卖出
+    buy1[0] = -a[0];
+    sell1[0] = 0;
+    buy2[0] = -INT_MAX;
+    sell2[0] = 0;
+    for (int i = 1; i < n; ++i) {
+        buy1[i] = max(buy1[i - 1], -a[i]);
+        sell1[i] = max(sell1[i - 1], buy1[i - 1] + a[i]);
+        buy2[i] = max(buy2[i - 1], sell1[i - 1] - a[i]);
+        sell2[i] = max(sell2[i - 1], buy2[i - 1] + a[i]);
+    }
+    return sell2[n - 1];
+}
+int main() {
     int n;
-    for(int i = 1;i <= n; i++) {
+    cin >> n;
+    vector<int> a(n);
+    for (int i = 0; i < n; ++i) {
         cin >> a[i];
     }
-    for(int j = 0; j <= 2; j++) {
-        f[1][j][0] = 0;
-        f[1][j][1] = -a[1];
-    }
-    memset(f, -0x3f3f, sizeof f);
-    f[1][0][0] = 0, f[1][0][1] = -a[1];
-    for(int i = 2; i <= n; i++) {
-        for(int j = 0; j <= 2; j++) {
-            f[i][j][0] = f[i - 1][j][0];
-            if(j >= 1) {
-                f[i][j][0] = max(f[i][j][0], f[i - 1][j - 1][1] + a[i]);
-            }
-            f[i][j][1] = max(f[i - 1][j][1], f[i - 1][j][0] - a[i]);
-        }
-    } 
-    cout << max({f[n][0][0], f[n][1][0], f[n][2][0]}) << '\n';
+    cout << solve(a) << '\n';
     return 0;
 }

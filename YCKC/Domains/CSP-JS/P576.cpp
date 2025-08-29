@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
-struct Point {
-    long long x, y;    bool operator<(const Point& other) const {
+struct node {
+    long long x, y;    bool operator<(const node& other) const {
         if (x != other.x) {
             return x < other.x;
         }
@@ -15,7 +15,7 @@ int main() {
     while (T--) {
         int N;
         cin >> N;
-        map<Point, int> mp;
+        map<node, int> mp;
         for (int i = 0; i < N; ++i) {
             long long x, y;
             cin >> x >> y;

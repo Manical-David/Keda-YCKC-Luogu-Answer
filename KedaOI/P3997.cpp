@@ -4,9 +4,9 @@ const int INF = 1e9;
 const int MAX = 1010;
 int dx[4] = {1, -1, 0, 0};
 int dy[4] = {0, 0, 1, -1};
-struct Node {
+struct node {
     int x, y, cost;
-    bool operator>(const Node& rhs) const {
+    bool operator>(const node& rhs) const {
         return cost > rhs.cost;
     }
 };
@@ -20,11 +20,11 @@ int main() {
         hay[x][y] = true;
     }
     vector<vector<int>> dist(MAX, vector<int>(MAX, INF));
-    priority_queue<Node, vector<Node>, greater<Node>> pq;
+    priority_queue<node, vector<node>, greater<node>> pq;
     dist[sx][sy] = 0;
     pq.push({sx, sy, 0});
     while (!pq.empty()) {
-        Node cur = pq.top(); pq.pop();
+        node cur = pq.top(); pq.pop();
         int x = cur.x, y = cur.y, cost = cur.cost;
         if (cost > dist[x][y]) continue;
         if (x == 0 && y == 0) {

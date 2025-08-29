@@ -1,32 +1,33 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    cout.tie(0);
-    int n;
-    string s;
-    cin >> n >> s;
-    vector<int> dancers(n);
-    for (int i = 0; i < n; i++) {
-        dancers[i] = i + 1;
+char S[500010];
+signed main() {
+	int n;
+    bool flag = false;
+	deque <int> dq;
+	// cin >> n;
+    scanf("%d", &n);
+	for(int i = 1; i <= n; i++) dq.push_back(i);
+	scanf("%s", &S[1]);
+	for(int i = 1; S[i] != '\0'; i++) {
+		if(S[i] == 'f') flag =! flag;
+		if(S[i] == 'r') {
+			if(flag)
+				dq.push_back(dq.front()), dq.pop_front();
+			else dq.push_front(dq.back()), dq.pop_back();
+		}
+	}
+	if(flag) {
+        while(!dq.empty()) {
+		    printf("%d\n", dq.back());
+		    dq.pop_back();
+	    }
     }
-    int offset = 0;
-    bool flipped = false;
-    for(char c : s) {
-        if (c == 'r') {
-            offset = (offset + 1) % n;
-        } else if (c == 'f') {
-            flipped = !flipped;
-        }
+	else {
+        while(!dq.empty()) {
+		    printf("%d\n", dq.front());
+		    dq.pop_front();
+	    }
     }
-    for (int i = 0; i < n; i++) {
-        int pos = (i - offset + n) % n;
-        if (flipped) {
-            pos = n - 1 - pos;
-        }
-        cout << dancers[pos] << "\n";
-    }
-
-    return 0;
+	return 0;
 }

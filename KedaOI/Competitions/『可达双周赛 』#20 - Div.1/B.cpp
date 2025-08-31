@@ -1,37 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
-int solve(vector<int> a) {
-    int n = a.size();
-    if (n < 3) return 0;
-    int cnt = 0;
-    int l = 0;
-    int r = 0;
-    while (r < n) {
-        if (r + 1 < n && a[r + 1] < a[r]) {
-            l = r;
-            while (r + 1 < n && a[r + 1] <= a[r]) {
-                r++;
-            }
-            if (r < n && a[r] >= a[l]) {
-                cnt++;
-                l = r;
-            } 
-            else {
-                r = l + 1;
-                continue;
-            }
-        }
-        r++;
-    }
-    return cnt;
-}
 int main() {
+    ios::sync_with_stdio(false), cin.tie(0);
     int n;
     cin >> n;
     vector<int> a(n);
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
+    for(int i = 0; i < n; ++i) cin >> a[i];
+    int ans = 0;
+    for(int i = 1; i < n - 1; ++i) {
+        if(a[i] < a[i-1] && a[i] < a[i+1]) {
+            ans++;
+        }
+        else if(a[i] == a[i-1] && a[i] < a[i+1]) {
+            if(i == 1 || a[i-2] > a[i-1]) ans++;
+        }
     }
-    cout << solve(a) << '\n';
+    cout << ans << '\n';
     return 0;
 }

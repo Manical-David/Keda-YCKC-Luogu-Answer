@@ -1,37 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
-int solve(int k, vector<int>& nums) {
-    int n = nums.size();
-    if (n == 0 || k == 0) return 0;
-    if (k >= n / 2) {
-        int pro = 0;
-        for (int i = 1; i < n; ++i) {
-            if (nums[i] > nums[i-1]) {
-                pro += nums[i] - nums[i-1];
-            }
-        }
-        return pro;
-    }
-    vector<vector<int>> dp(k + 1, vector<int>(2, 0));
-    for (int j = 0; j <= k; ++j) {
-        dp[j][0] = 0;
-        dp[j][1] = -nums[0];
-    }
-    for (int i = 1; i < n; ++i) {
-        for (int j = 1; j <= k; ++j) {
-            dp[j][0] = max(dp[j][0], dp[j][1] + nums[i]);
-            dp[j][1] = max(dp[j][1], dp[j-1][0] - nums[i]);
-        }
-    }
-    return dp[k][0];
-}
+constexpr int N = 1e5 + 7, K = 107;
+int n, m, w[N];
+int f[N][K][2];
 int main() {
-    int N, k;
-    cin >> N >> k;
-    vector<int> a(N);
-    for (int i = 0; i < N; ++i) {
-        cin >> a[i];
+    ios::sync_with_stdio(false), cin.tie(0);
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++) {
+        cin >> w[i];
     }
-    cout << solve(k, a) << endl;
+    memset(f, -0x3f, sizeof(f));
+    for (int i = 0; i <= n; i++) f[i][0][0] = 0;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            f[i][j][0] = max(f[i - 1][j][1] + w[i], f[i - 1][j][0]);
+            f[i][j][1] = max(f[i - 1][j - 1][0] - w[i], f[i - 1][j][1]);
+        }
+    }
+    int res = 0;
+    for(int j = 0; j <= m; j++) {
+        res = max(res, f[n][j][0]);
+    }
+    cout << res << '\n';
     return 0;
-}
+} // 以开仓为一次交易分界线

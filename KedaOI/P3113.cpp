@@ -1,41 +1,25 @@
 #include <bits/stdc++.h>
-#define int long long
 using namespace std;
-signed main() {
-    int n;
-    cin >> n;
-    string s;
-    cin >> s;
-    vector<int> val(n);
-    for (int i = 0; i < n; ++i) {
-        cin >> val[i];
+constexpr int N = 2e5 + 10;
+int n, a[N];
+char str[N];
+long long dp[N][3][3];
+int main() {
+    ios::sync_with_stdio(false), cin.tie(0);
+    cin >> n >> (str + 1);
+    for(int i = 1; i <= n; i++) {
+        cin >> a[i];
     }
-    vector<int> pre(n + 1, 0);
-    for (int i = 2; i <= n; ++i) {
-        pre[i] = pre[i - 1];
-        if (s[i - 1] == s[i - 2]) {
-            pre[i] += min(val[i - 1], val[i - 2]);
+    memset(dp, 0x3f, sizeof dp);
+    dp[1][0][(str[1] - '0')] = 0;
+    dp[1][0][(str[1] - '0') ^ 1] = a[1];
+    for(int i = 2; i <= n; i++) {
+        int t = str[i] - '0';
+        for(int k = 0; k < 3; k++) {
+            dp[i][0][k] = dp[i - 1][0][k ^ 1] + (k == t ? 0 : a[i]);
+            dp[i][1][k] = min(dp[i - 1][1][k ^ 1], dp[i - 1][0][k]) + (k == t ? 0 : a[i]);
         }
     }
-    vector<int> suffix(n + 1, 0);
-    for (int i = n - 2; i >= 0; --i) {
-        suffix[i] = suffix[i + 1];
-        if (s[i] == s[i + 1]) {
-            suffix[i] += min(val[i], val[i + 1]);
-        }
-    }
-    long long minn = LLONG_MAX;
-    for (int i = 0; i < n - 1; ++i) {
-        long long cost = 0;
-        if (s[i] == s[i + 1]) {
-            cost = pre[i] + suffix[i + 2];
-        } else {
-            cost = pre[i] + min(val[i], val[i + 1]) + suffix[i + 2];
-        }
-        if (cost < minn) {
-            minn = cost;
-        }
-    }
-    cout << minn << '\n';
+    cout << min(dp[n][1][0], dp[n][1][1]) << '\n';
     return 0;
 }

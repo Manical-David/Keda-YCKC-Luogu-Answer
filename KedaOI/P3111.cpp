@@ -1,29 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
-int solve(vector<int>& a) {
-    int n = a.size();
-    if (n < 2) return 0;
-    vector<int> hold(n, 0);
-    vector<int> not_hold(n, 0);
-    vector<int> cooldown(n, 0);
-    hold[0] = -a[0]; 
-    not_hold[0] = 0;
-    cooldown[0] = 0;
-    for (int i = 1; i < n; ++i) {
-        hold[i] = max(hold[i - 1], not_hold[i - 1] - a[i]);
-        not_hold[i] = max(not_hold[i - 1], cooldown[i - 1]);
-        cooldown[i] = hold[i - 1] + a[i];
-    }
-
-    return max(not_hold[n - 1], cooldown[n - 1]);
-}
+constexpr int N = 1e5 + 7;
+int n, w[N];
+int f[N][3];
 int main() {
-    int n;
+    ios::sync_with_stdio(false), cin.tie(0);
     cin >> n;
-    vector<int> a(n);
-    for (int i = 0; i < n; ++i) {
-        cin >> a[i];
+    for(int i = 1; i <= n; i++) {
+        cin >> w[i];
     }
-    cout << solve(a) << endl;
+    f[0][0] = f[0][1] = -0x3f3f3f3f;
+    f[0][2] = 0;
+    for(int i = 1; i <= n; i++) {
+        f[i][0] = max(f[i - 1][0], f[i - 1][2] - w[i]);
+        f[i][1] = f[i - 1][0] + w[i];
+        f[i][2] = max(f[i - 1][2], f[i - 1][1]);
+    }
+    cout << max(f[n][1], f[n][2]);
     return 0;
 }

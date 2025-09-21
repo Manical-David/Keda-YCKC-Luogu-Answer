@@ -1,112 +1,34 @@
 #include <bits/stdc++.h>
+#include <windows.h>
+#include <ctime>
 using namespace std;
-constexpr int N = 100010;
-long long n, m, len, V, l[N], r[N], d[N], v[N], a[N], p[N], ans1, ans2, T;
-int V2;
-priority_queue<pair<long long, long long>, vector<pair<long long, long long>>, greater<pair<long long, long long>>> q;
-int f(int v0, int a, int s) {
-    return v0 * v0 + 2 * a * s;
-}
-void solve() {
-    ans1 = ans2 = 0;
-    while (!q.empty()) q.pop();
-    cin >> n >> m >> len >> V;
-    V2 = V;
-    V2 *= V;
-    for (long long i = 1; i <= n; i++) cin >> d[i] >> v[i] >> a[i];
-    for (long long i = 1; i <= m; i++) cin >> p[i];
-    for (long long i = 1; i <= n; i++) {
-        if (a[i] == 0) {
-            long long L = 1, R = m;
-            while (L < R) {
-                long long Mid = (L + R) / 2;
-                if (p[Mid] < d[i]) L = Mid + 1;
-                else R = Mid;
-            }
-            if (p[L] < d[i] || v[i] <= V) {
-                l[i] = r[i] = -1;
-                continue;
-            }
-            l[i] = L;
-            r[i] = m;
-        } else if (a[i] < 0) {
-            long long L = d[i], R = len;
-            while (L < R) {
-                long long Mid = (L + R + 1) / 2;
-                if (f(v[i], a[i], Mid - d[i]) <= V2) R = Mid - 1;
-                else L = Mid;
-            }
-            if (f(v[i], a[i], L - d[i]) <= V2) {
-                l[i] = r[i] = -1;
-                continue;
-            }
-            long long ansr = L, ansl = d[i];
-            L = 1, R = m;
-            while (L < R) {
-                long long Mid = (L + R) / 2;
-                if (p[Mid] < ansl) L = Mid + 1;
-                else R = Mid;
-            }
-            if (p[L] < ansl || p[L] > ansr) {
-                l[i] = r[i] = -1;
-                continue;
-            }
-            l[i] = L;
-            L = 1, R = m;
-            while (L < R) {
-                long long Mid = (L + R + 1) / 2;
-                if (p[Mid] > ansr) R = Mid - 1;
-                else L = Mid;
-            }
-            r[i] = L;
-        } else {
-            long long L = d[i], R = len;
-            while (L < R) {
-                long long Mid = (L + R) / 2;
-                if (f(v[i], a[i], Mid - d[i]) <= V2) L = Mid + 1;
-                else R = Mid;
-            }
-            if (f(v[i], a[i], L - d[i]) <= V2) {
-                l[i] = r[i] = -1;
-                continue;
-            }
-            long long ansl = L, ansr = len;
-            L = 1, R = m;
-            while (L < R) {
-                long long Mid = (L + R) / 2;
-                if (p[Mid] < ansl) L = Mid + 1;
-                else R = Mid;
-            }
-            if (p[L] < ansl || p[L] > ansr) {
-                l[i] = r[i] = -1;
-                continue;
-            }
-            l[i] = L;
-            L = 1, R = m;
-            while (L < R) {
-                long long Mid = (L + R + 1) / 2;
-                if (p[Mid] > ansr) R = Mid - 1;
-                else L = Mid;
-            }
-            r[i] = L;
+int main() {
+    int ok = 0, n; cout << "请输入对拍组数："; cin >> n;
+    int maxt; cout << "\n请输入限制时间（毫秒，不需单位）："; cin >> maxt;]
+    PROCESS_MEMORY_COUNTERS pmc;
+    puts("");
+    for (int i = 1; i <= n; ++i) {
+        system("data.exe > in.txt");
+        system("std.exe < in.txt > std.txt");
+        double begin = clock();
+        system("baoli.exe < in.txt > baoli.txt");
+        double end = clock();
+        double t = (end - begin);
+        if (system("fc std.txt baoli.txt")) {
+            printf("测试点#%d Wrong Answer\n", i);
+        }
+        else if (t > maxt) {
+            printf("测试点#%d Time Limited Exceeded 用时 %.0lfms\n", i, t);
+        }
+        else {
+            printf("测试点#%d Accepted 用时%.0lfms\n", i, t);
+            ok++; //AC数量+1
         }
     }
-    for (long long i = 1; i <= n; i++)
-        if (l[i] != -1)
-            q.push({r[i], l[i]}), ans1++;
-    long long nr = -1;
-    while (!q.empty()) {
-        pair<long long, long long> now = q.top();
-        q.pop();
-        if (nr < now.second)
-            nr = now.first, ans2++;
-    }
-    cout << ans1 << ' ' << m - ans2 << endl;
+    puts("");
+    double res = 100.0 * ok / n;
+    printf("共 %d 组测试数据，AC数据 %d 组。 得分%.1lf。", n, ok, res);
 }
-int main() {
-    ios::sync_with_stdio(false), cin.tie(0);
-    T = 1;
-    cin >> T;
-    while (T--) solve();
-    return 0;
-}
+// 暴力解法：baoli.cpp -> baoli.exe 输出到baoli.txt
+// 你的程序：std.cpp -> std.exe 输出到std.txt
+// 数据生成：data.cpp -> data.exe 直接freopen in.txt w，输出

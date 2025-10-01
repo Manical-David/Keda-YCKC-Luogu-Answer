@@ -2,8 +2,8 @@
 using namespace std;
 int main() {
     ios::sync_with_stdio(false), cin.tie(0);
-    int a, b, c;
-    cin >> a >> b >> c;
-    
+    int n;
+    cin >> n;
+    cout << (bool)n;
     return 0;
 }

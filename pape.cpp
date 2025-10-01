@@ -1,34 +1,35 @@
 #include <bits/stdc++.h>
-#include <windows.h>
-#include <ctime>
 using namespace std;
 int main() {
-    int ok = 0, n; cout << "请输入对拍组数："; cin >> n;
-    int maxt; cout << "\n请输入限制时间（毫秒，不需单位）："; cin >> maxt;]
-    PROCESS_MEMORY_COUNTERS pmc;
-    puts("");
+    ios::sync_with_stdio(false), cin.tie(0);
+    int n, m, k;
+    cin >> n >> m >> k;
+    vector<string> g(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> g[i];
+    }
+    vector<vector<int>> pre(n + 1, vector<int>(m + 1, 0));
     for (int i = 1; i <= n; ++i) {
-        system("data.exe > in.txt");
-        system("std.exe < in.txt > std.txt");
-        double begin = clock();
-        system("baoli.exe < in.txt > baoli.txt");
-        double end = clock();
-        double t = (end - begin);
-        if (system("fc std.txt baoli.txt")) {
-            printf("测试点#%d Wrong Answer\n", i);
-        }
-        else if (t > maxt) {
-            printf("测试点#%d Time Limited Exceeded 用时 %.0lfms\n", i, t);
-        }
-        else {
-            printf("测试点#%d Accepted 用时%.0lfms\n", i, t);
-            ok++; //AC数量+1
+        for (int j = 1; j <= m; ++j) {
+            pre[i][j] = pre[i - 1][j] + pre[i][j - 1] - pre[i - 1][j - 1] + (g[i - 1][j - 1] == '1' ? 1 : 0);
         }
     }
-    puts("");
-    double res = 100.0 * ok / n;
-    printf("共 %d 组测试数据，AC数据 %d 组。 得分%.1lf。", n, ok, res);
-}
-// 暴力解法：baoli.cpp -> baoli.exe 输出到baoli.txt
-// 你的程序：std.cpp -> std.exe 输出到std.txt
-// 数据生成：data.cpp -> data.exe 直接freopen in.txt w，输出
+    int ans = -0x3f3f3f;
+    for (int i = 0; i < n; ++i) {
+        for (int j = i; j < n; ++j) {
+            for (int l = 0; l < m; ++l) {
+                for (int r = l; r < m; ++r) {
+                    int cnt = pre[j + 1][r + 1] - pre[i][r + 1] - pre[j + 1][l] + pre[i][l];
+                    if (cnt >= k) {
+                        int S = (j - i + 1) * (r - l + 1);
+                        if (S < ans) {
+                            ans = S;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    cout << (ans == -0x3f3f3f ? 0 : ans) << '\n';
+    return 0;
+}// 不就是二位前缀和模版题吗

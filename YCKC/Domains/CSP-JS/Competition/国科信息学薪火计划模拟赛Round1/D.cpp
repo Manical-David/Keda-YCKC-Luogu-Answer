@@ -1,36 +1,49 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 const int INF = 1e9;
-
+vector <vector<int> > vis;
+vector<int> c0, c1;
+int k_max;
+int dfs(int k, int v_prev) {
+    if (k == k_max) {
+        return v_prev;
+    }
+    if (vis[k][v_prev] != -1) {
+        return vis[k][v_prev];
+    }
+    int minn = INF;
+    for (int v_curr : {0, 1}) {
+        int op2 = (v_prev + v_curr) % 2;
+        int t = v_prev ^ v_curr;
+        int op1 = (t == 0) ? c1[k] : c0[k];
+        int sub = dfs(k + 1, v_curr);
+        minn = min(minn, op2 + op1 + sub);
+    }
+    vis[k][v_prev] = minn;
+    return minn;
+}
 int main() {
+    freopen("coin.in", "r", stdin);
+    freopen("coin.out", "w", stdout);
     string s;
     int m;
     cin >> s >> m;
     int n = s.size();
     int s_len = n - m;
     if (s_len <= 0) {
-        cout << 0 << endl;
+        cout << 0 << '\n';
         return 0;
     }
-    int k_max = n / m;
-    vector<int> c0(k_max + 2, 0); // 存储每个k对应的t(i)=0的数量
-    vector<int> c1(k_max + 2, 0); // 存储每个k对应的t(i)=1的数量
-
-    // 预处理c0和c1
+    k_max = n / m;
+    c0.resize(k_max + 2, 0);
+    c1.resize(k_max + 2, 0);
     for (int k = 1; k <= k_max - 1; ++k) {
-        int i_low = (k - 1) * m - 1;
-        int i_high = k * m - 1;
-        i_high = min(i_high, s_len - 1);
-        int start_i = max(0, i_low + 1);
-        int end_i = i_high;
-        if (start_i > end_i) {
-            c0[k] = 0;
-            c1[k] = 0;
-            continue;
-        }
+        int si = (k - 1) * m;
+        int ei = k * m - 1;
+        ei = min(ei, s_len - 1);
+        if (si > ei) continue;
         int cnt0 = 0, cnt1 = 0;
-        for (int i = start_i; i <= end_i; ++i) {
+        for (int i = si; i <= ei; ++i) {
             int j = i + m;
             int a = (s[i] == '1') ? 1 : 0;
             int b = (s[j] == '1') ? 1 : 0;
@@ -41,32 +54,10 @@ int main() {
         c0[k] = cnt0;
         c1[k] = cnt1;
     }
-
-    // 动态规划初始化
-    vector<vector<int>> dp(k_max + 2, vector<int>(2, INF));
-    dp[1][0] = 0;
-    dp[1][1] = 0;
-
-    // 填充DP表
-    for (int k = 1; k <= k_max - 1; ++k) {
-        for (int v_prev : {0, 1}) {
-            if (dp[k][v_prev] == INF) continue;
-            for (int v_curr : {0, 1}) {
-                int s_k = (v_prev + v_curr) % 2; // 操作2的成本
-                int xor_val = v_prev ^ v_curr;
-                int op1 = (xor_val == 0) ? c1[k] : c0[k]; // 操作1的成本
-                int total = s_k + op1;
-                if (dp[k + 1][v_curr] > dp[k][v_prev] + total) {
-                    dp[k + 1][v_curr] = dp[k][v_prev] + total;
-                }
-            }
-        }
-    }
-
-    // 计算最终结果
-    int res0 = dp[k_max][0] + 0;
-    int res1 = dp[k_max][1] + 1;
-    cout << min(res0, res1) << endl;
-
+    vis.assign(k_max + 2, vector<int>(2, -1));
+    int ans = min(dfs(1, 0), dfs(1, 1));
+    cout << ans << '\n';
+    fclose(stdin);
+    fclose(stdout);
     return 0;
 }

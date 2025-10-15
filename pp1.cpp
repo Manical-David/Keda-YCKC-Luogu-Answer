@@ -1,59 +1,50 @@
 #include <bits/stdc++.h>
-using namespace std;
-const int INF = 1e9;
-vector <vector<int> > vis;
-vector<int> c0, c1;
-int k_max;
-int dfs(int k, int v_prev) {
-    if (k == k_max) {
-        return v_prev;
+#include <unistd.h>
+const int MAX_NUM = 10000;
+short cnt[MAX_NUM];
+char buf[1 << 20];
+int buf_ptr = 0;
+inline void put_num(int x) {
+    if (buf_ptr + 10 >= (1 << 20)) {
+        write(1, buf, buf_ptr);
+        buf_ptr = 0;
     }
-    if (vis[k][v_prev] != -1) {
-        return vis[k][v_prev];
+    char tmp[10];
+    int tmp_ptr = 0;
+    if (x == 0) {
+        tmp[tmp_ptr++] = '0';
+    } else {
+        while (x > 0) {
+            tmp[tmp_ptr++] = x % 10 + '0';
+            x /= 10;
+        }
     }
-    int minn = INF;
-    for (int v_curr : {0, 1}) {
-        int op2 = (v_prev + v_curr) % 2;
-        int t = v_prev ^ v_curr;
-        int op1 = (t == 0) ? c1[k] : c0[k];
-        int sub = dfs(k + 1, v_curr);
-        minn = min(minn, op2 + op1 + sub);
+    for (int i = tmp_ptr - 1; i >= 0; --i) {
+        buf[buf_ptr++] = tmp[i];
     }
-    vis[k][v_prev] = minn;
-    return minn;
+    buf[buf_ptr++] = ' ';
 }
 int main() {
-    string s;
-    int m;
-    cin >> s >> m;
-    int n = s.size();
-    int s_len = n - m;
-    if (s_len <= 0) {
-        cout << 0 << '\n';
-        return 0;
-    }
-    k_max = n / m;
-    c0.resize(k_max + 2, 0);
-    c1.resize(k_max + 2, 0);
-    for (int k = 1; k <= k_max - 1; ++k) {
-        int si = (k - 1) * m;
-        int ei = k * m - 1;
-        ei = min(ei, s_len - 1);
-        if (si > ei) continue;
-        int cnt0 = 0, cnt1 = 0;
-        for (int i = si; i <= ei; ++i) {
-            int j = i + m;
-            int a = (s[i] == '1') ? 1 : 0;
-            int b = (s[j] == '1') ? 1 : 0;
-            int t = a ^ b;
-            if (t == 0) cnt0++;
-            else cnt1++;
+    static char input[1 << 20];
+    setvbuf(stdin, input, _IOFBF, 1 << 20);
+    memset(cnt, 0, sizeof(cnt));
+    int N;
+    fscanf(stdin, "%d", &N);
+    for (int i = 0; i < N; ++i) {
+        int num;
+        fscanf(stdin, "%d", &num);
+        if (num >= 0 && num < MAX_NUM) {
+            cnt[num]++;
         }
-        c0[k] = cnt0;
-        c1[k] = cnt1;
     }
-    vis.assign(k_max + 2, vector<int>(2, -1));
-    int ans = min(dfs(1, 0), dfs(1, 1));
-    cout << ans << '\n';
+    for (int i = 0; i < MAX_NUM; ++i) {
+        for (int j = 0; j < cnt[i]; ++j) {
+            put_num(i);
+        }
+    }
+    if (buf_ptr > 0) {
+        if (buf_ptr > 0) buf_ptr--;
+        write(1, buf, buf_ptr);
+    }
     return 0;
 }

@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
+#define int long long
 using namespace std;
-int main() {
+signed main() {
     freopen("aisle.in", "r", stdin);
     freopen("aisle.out", "w", stdout);
     int n, l, w, x, y, a;

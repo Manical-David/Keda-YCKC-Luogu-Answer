@@ -4,7 +4,7 @@ using namespace std;
 int n, k;
 ll S;
 vector<ll> a;
-vector<ll> fact;
+vector<ll> f;
 ll times_(ll x) { // Mune
     if (x > 20) return -1; // 20!爆
     ll res = 1;

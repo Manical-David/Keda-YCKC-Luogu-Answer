@@ -1,46 +1,50 @@
 #include <bits/stdc++.h>
-using namespace std;
-const int N = 300;
-char mp[N][N];
-int dist[N][N];
-int dx[4] = {1, -1, 0, 0};
-int dy[4] = {0, 0, 1, -1};
+#include <unistd.h>
+const int MAX_NUM = 10000;
+short cnt[MAX_NUM];
+char buf[1 << 20];
+int buf_ptr = 0;
+inline void put_num(int x) {
+    if (buf_ptr + 10 >= (1 << 20)) {
+        write(1, buf, buf_ptr);
+        buf_ptr = 0;
+    }
+    char tmp[10];
+    int tmp_ptr = 0;
+    if (x == 0) {
+        tmp[tmp_ptr++] = '0';
+    } else {
+        while (x > 0) {
+            tmp[tmp_ptr++] = x % 10 + '0';
+            x /= 10;
+        }
+    }
+    for (int i = tmp_ptr - 1; i >= 0; --i) {
+        buf[buf_ptr++] = tmp[i];
+    }
+    buf[buf_ptr++] = ' ';
+}
 int main() {
-    ios::sync_with_stdio(false), cin.tie(0);
-    int M, N;
-    while (cin >> M >> N, M && N) {
-        int sx = -1, sy = -1;
-        for (int i = 0; i < M; ++i) {
-            cin >> mp[i];
-            for (int j = 0; j < N; ++j) {
-                if (mp[i][j] == '@') {
-                    sx = i;
-                    sy = j;
-                }
-            }
+    static char input[1 << 20];
+    setvbuf(stdin, input, _IOFBF, 1 << 20);
+    memset(cnt, 0, sizeof(cnt));
+    int N;
+    fscanf(stdin, "%d", &N);
+    for (int i = 0; i < N; ++i) {
+        int num;
+        fscanf(stdin, "%d", &num);
+        if (num >= 0 && num < MAX_NUM) {
+            cnt[num]++;
         }
-        memset(dist, -1, sizeof(dist));
-        queue<pair<int, int>> q;
-        q.push({sx, sy});
-        dist[sx][sy] = 0;
-        int ans = -1;
-        while (!q.empty()) {
-            auto cur = q.front(); q.pop();
-            int x = cur.first, y = cur.second;
-            if (mp[x][y] == '*') {
-                ans = dist[x][y];
-                break;
-            }
-            for (int d = 0; d < 4; ++d) {
-                int nx = x + dx[d], ny = y + dy[d];
-                if (nx >= 0 && nx < M && ny >= 0 && ny < N &&
-                    mp[nx][ny] != '#' && dist[nx][ny] == -1) {
-                    dist[nx][ny] = dist[x][y] + 1;
-                    q.push({nx, ny});
-                }
-            }
+    }
+    for (int i = 0; i < MAX_NUM; ++i) {
+        for (int j = 0; j < cnt[i]; ++j) {
+            put_num(i);
         }
-        cout << ans << endl;
+    }
+    if (buf_ptr > 0) {
+        if (buf_ptr > 0) buf_ptr--;
+        write(1, buf, buf_ptr);
     }
     return 0;
 }

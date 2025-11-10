@@ -1,22 +1,24 @@
 #include <bits/stdc++.h>
+#define int long long
 using namespace std;
-long long n;
-map<long long, long long> mp;
-long long dfs(long long u) {
+int n;
+map<int, int> mp;
+int dfs(int u) {
     if (u < 2) return 0;
     if (mp[u]) return mp[u];
-    long long l = u / 2;
-    long long r = (u + 1) / 2;
+    int l = u / 2;
+    int r = (u + 1) / 2;
     mp[u] = dfs(l) + dfs(r) + u;
     return mp[u];
 }
-int main() {
-    scanf("%lld", &n);
-    printf("%lld\n", dfs(n));
+signed main() {
+    ios::sync_with_stdio(false), cin.tie(0);
+    cin >> n;
+    cout << dfs(n) << '\n';
     return 0;
 }
 /*
-long long res = 0, nowVal = 1;
+int res = 0, nowVal = 1;
 while(ture) {
     if(nowVal * 2 > n) {
         res += 2 * (n - nowVal);

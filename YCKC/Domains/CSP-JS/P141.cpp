@@ -17,9 +17,9 @@ void dfs(int x, int y) {
     }
 }
 int main() {
-    int T;
-    cin >> T;
-    while (T--) {
+    int t;
+    cin >> t;
+    while (t--) {
         cin >> W >> H;
         grid.resize(H);
         int x, y;

@@ -8,7 +8,7 @@ int main() {
     long long Rt, Ct, Ra, Ca, N;
     int M, L;
     cin >> Rt >> Ct >> Ra >> Ca >> N >> M >> L;
-    vector<mv> S, T;
+    vector<mv> S, t;
     for (int i = 0; i < M; ++i) {
         char dir;
         long long st;
@@ -19,10 +19,10 @@ int main() {
         char dir;
         long long st;
         cin >> dir >> st;
-        T.push_back({dir, st});
+        t.push_back({dir, st});
     }
     int s_ptr = 0, t_ptr = 0;
-    long long s_st = S[0].st, t_st = T[0].st;
+    long long s_st = S[0].st, t_st = t[0].st;
     int cnt = 0;
     if (Rt == Ra && Ct == Ca) {
         cnt++;
@@ -32,7 +32,7 @@ int main() {
         s_st -= minn;
         t_st -= minn;
         char s_dir = S[s_ptr].dir;
-        char t_dir = T[t_ptr].dir;
+        char t_dir = t[t_ptr].dir;
         for (long long i = 0; i < minn; ++i) {
             switch (s_dir) {
                 case 'U': Rt--; break;
@@ -59,7 +59,7 @@ int main() {
         if (t_st == 0) {
             t_ptr++;
             if (t_ptr < L) {
-                t_st = T[t_ptr].st;
+                t_st = t[t_ptr].st;
             }
         }
     }

@@ -3,9 +3,9 @@ using namespace std;
 #define ll long long
 int main() {
     ios::sync_with_stdio(false), cin.tie();
-    int T;
-    cin >> T;
-    while (T--) {
+    int t;
+    cin >> t;
+    while (t--) {
         int n, k;
         cin >> n >> k;
         vector<ll> a(n + 1), ps(n + 1, 0);

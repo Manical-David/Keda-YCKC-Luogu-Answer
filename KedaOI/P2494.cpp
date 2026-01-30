@@ -2,9 +2,9 @@
 using namespace std;
 int main() {
     string s;
-    int T;
-    cin >> s >> T;
-    for (int i = 0; i < T; ++i) {
+    int t;
+    cin >> s >> t;
+    for (int i = 0; i < t; ++i) {
         int pos;
         string str;
         cin >> pos >> str;

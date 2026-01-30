@@ -14,10 +14,10 @@ void solve() {
     } while(i != tim1 * 60 + tim2);
     cout << ans << '\n';
 }
-int T;
+int t;
 int main() {
-    cin >> T;
-    while (T--) {
+    cin >> t;
+    while (t--) {
         solve();
     }
     return 0;

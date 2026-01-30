@@ -77,8 +77,8 @@ int main() {
     }
 
     // 建图
-    // S: 0, O_j: 1~M, P_i: M+1~M+N, T: M+N+1
-    int S = 0, T = M+N+1;
+    // S: 0, O_j: 1~M, P_i: M+1~M+N, t: M+N+1
+    int S = 0, t = M+N+1;
     MinCostFlow mcf(M+N+2);
 
     // S -> O_j
@@ -91,13 +91,13 @@ int main() {
             mcf.add(1+j, M+i, INF, 0);
         }
     }
-    // P_i -> T
+    // P_i -> t
     for (int i = 2; i <= N; ++i) {
         if (need[i] > 0)
-            mcf.add(M+i, T, need[i], 0);
+            mcf.add(M+i, t, need[i], 0);
     }
 
-    int res = mcf.flow(S, T, total_need);
+    int res = mcf.flow(S, t, total_need);
     cout << res << endl;
     return 0;
 }

@@ -23,9 +23,9 @@ int solve(int a, int n) {
     return ans;
 }
 int main() {
-    int T;
-    cin >> T;
-    while (T--) {
+    int t;
+    cin >> t;
+    while (t--) {
         int a, n;
         cin >> a >> n;
         cout << solve(a, n) << '\n';

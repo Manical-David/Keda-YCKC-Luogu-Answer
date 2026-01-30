@@ -11,9 +11,9 @@ int main() {
     freopen("sticks.in", "r", stdin);
     freopen("sticls.out", "w", stdout);
     ios::sync_with_stdio(false), cin.tie(0);
-    int T;
-    cin >> T;
-    while (T--) {
+    int t;
+    cin >> t;
+    while (t--) {
         vector<long long> s(N);
         for (int i = 0; i < N; ++i) cin >> s[i];
         ts.clear();

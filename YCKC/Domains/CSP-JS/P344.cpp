@@ -2,8 +2,8 @@
 using namespace std;
 int main() {
     int N;
-    long long T;
-    cin >> N >> T;
+    long long t;
+    cin >> N >> t;
     vector<pair<long long, long long>> dell;
     for (int i = 0; i < N; ++i) {
         long long d, b;
@@ -25,14 +25,14 @@ int main() {
         hay += b;
         lastday = d - 1;
         if (hay == 0) continue;
-        long long next_d = (ts == dell.back()) ? T + 1 : dell[&ts - &dell[0] + 1].first;
-        long long end_day = min(next_d - 1, T);
+        long long next_d = (ts == dell.back()) ? t + 1 : dell[&ts - &dell[0] + 1].first;
+        long long end_day = min(next_d - 1, t);
         long long dap = end_day - d + 1;
         long long eat = min(dap, hay);
         sum += eat;
         hay -= eat;
         lastday = d + eat - 1;
-        if (lastday >= T) break;
+        if (lastday >= t) break;
     }
     cout << sum << endl;   
     return 0;

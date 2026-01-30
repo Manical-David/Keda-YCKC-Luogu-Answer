@@ -1,12 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
-int T, cnt = 0;
+int t, cnt = 0;
 bool vis[300];
 string s, t;
 vector<int> v[300];
 int main() {
-    scanf("%d", &T);
-    while (T--) {
+    scanf("%d", &t);
+    while (t--) {
         memset(vis, false, sizeof vis);
         for (char i = 'a'; i <= 'z'; ++i)
             v[i].clear();

@@ -15,8 +15,8 @@ ll phi(ll x)
 }
 int main()
 {
-	int T; cin>>T;
-	while(T--)
+	int t; cin>>t;
+	while(t--)
 	{
 		ll a,b; cin>>a>>b;
 		ll bin = __gcd(a, b);

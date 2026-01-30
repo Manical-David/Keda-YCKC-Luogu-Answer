@@ -3,21 +3,21 @@ using namespace std;
 #define int long long
 constexpr int N = 150005;
 vector<int> G[N];  // 邻接表
-int vis[N], T = 0; // 用时间戳方式标记访问
+int vis[N], t = 0; // 用时间戳方式标记访问
 int N, M, Q;
 int bfs(int start, int k) {
-    T++;
+    t++;
     queue<pair<int, int>> q;
     q.push({start, 0});
-    vis[start] = T;
+    vis[start] = t;
     int res = start;
     while (!q.empty()) {
         auto [u, d] = q.front(); q.pop();
         if (d == k) continue;
 
         for (int v : G[u]) {
-            if (vis[v] != T) {
-                vis[v] = T;
+            if (vis[v] != t) {
+                vis[v] = t;
                 res += v;
                 q.push({v, d + 1});
             }

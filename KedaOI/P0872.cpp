@@ -14,9 +14,9 @@ int minBoxes(int n) {
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int T;
-    cin >> T;
-    while (T--) {
+    int t;
+    cin >> t;
+    while (t--) {
         int n;
         cin >> n;
         cout << minBoxes(n) << '\n';

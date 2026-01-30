@@ -3,18 +3,20 @@
         {
             "name": "Mac",
             "includePath": [
-                "/Users/luowang/Desktop/桌面文件/CodeBase/**"
+                "/Users/luowang/Desktop/桌面文件/CodeBase/**",
+                "/Users/luowang/Desktop/桌面文件/CodeBase"
             ],
             "defines": [],
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "macos-clang-x64",
+            "intelliSenseMode": "macos-clang-x86",
             "mergeConfigurations": false,
             "recursiveIncludes": {},
-            "compilerPath": "/usr/bin/g++",
+            "compilerPath": "/usr/bin/clang++",
             "browse": {
                 "limitSymbolsToIncludedHeaders": true
-            }
+            },
+            "compilerPathInCppPropertiesJson": "/usr/bin/g++"
         },
         {
             "name": "Linux",

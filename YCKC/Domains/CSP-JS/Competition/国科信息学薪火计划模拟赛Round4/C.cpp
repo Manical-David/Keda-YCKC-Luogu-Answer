@@ -20,9 +20,9 @@ int main() {
     ios::sync_with_stdio(false), cin.tie(0);
     freopen("range.in", "r", stdin);
     freopen("range.out", "w", stdout);
-    int T;
-    if (!(cin >> T)) return 0;
-    for (int tc = 1; tc <= T; ++tc) {
+    int t;
+    if (!(cin >> t)) return 0;
+    for (int tc = 1; tc <= t; ++tc) {
         int n;
         long long m;
         cin >> n >> m;

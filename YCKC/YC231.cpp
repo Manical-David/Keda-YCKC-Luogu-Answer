@@ -7,13 +7,13 @@ int main() {
     cin >> N;
     vector<ll> A(N+1);
     for(int i = 1; i <= N; ++i) cin >> A[i];
-    vector<ll> S(N), T(N);
-    for(int i = 1; i < N; ++i) cin >> S[i] >> T[i];
+    vector<ll> S(N), t(N);
+    for(int i = 1; i < N; ++i) cin >> S[i] >> t[i];
     for(int i = 1; i < N; ++i) {
         ll cnt = A[i] / S[i];
         if(cnt > 0) {
             A[i] -= cnt * S[i];
-            A[i+1] += cnt * T[i];
+            A[i+1] += cnt * t[i];
         }
     }
     cout << A[N] << '\n';

@@ -27,9 +27,9 @@ int main() {
             }
         }
     }
-    int T;
-    cin >> T;
-    while (T--) {
+    int t;
+    cin >> t;
+    while (t--) {
         int Lx, Rx, Ly, Ry, Lz, Rz;
         cin >> Lx >> Rx >> Ly >> Ry >> Lz >> Rz;
         int sum = pre[Rx][Ry][Rz]

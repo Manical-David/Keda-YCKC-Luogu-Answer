@@ -28,9 +28,9 @@ int findMinPrime(int X) {
     return -1; // 理论上不会执行到这里，因为至少可以添加1位数字
 }
 int main() {
-    int T;
-    cin >> T;
-    while (T--) {
+    int t;
+    cin >> t;
+    while (t--) {
         int X;
         cin >> X;
         cout << findMinPrime(X) << endl;

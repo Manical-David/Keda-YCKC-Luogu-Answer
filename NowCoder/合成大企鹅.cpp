@@ -9,11 +9,11 @@ int main() {
         cin >> a[i];
     }
     sort(a.begin(), a.end());
-    double T = 0.00;
-    T = a[0];
+    double t = 0.00;
+    t = a[0];
     for (int i = 1; i < n; i++) {
-        T = sqrt(T * a[i]);
+        t = sqrt(t * a[i]);
     }
-    cout << T;
+    cout << t;
     return 0;
 }

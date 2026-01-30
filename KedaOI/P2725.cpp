@@ -9,7 +9,7 @@ void solve() {
     for(char c : str) {
         sum += pow(c - '0', length);
     }
-    if(sum == n) cout << "T\n";
+    if(sum == n) cout << "t\n";
     else cout << "F\n";
 }
 int main() {

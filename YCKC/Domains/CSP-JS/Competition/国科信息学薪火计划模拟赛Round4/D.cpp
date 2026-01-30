@@ -73,9 +73,9 @@ int main() {
     ios::sync_with_stdio(false), cin.tie(0);
     freopen("solo.in", "r", stdin);
     freopen("solo.out", "w", stdout);
-    int T;
-    cin >> T;
-    while (T--) {
+    int t;
+    cin >> t;
+    while (t--) {
         solve();
     }
     fclose(stdin);

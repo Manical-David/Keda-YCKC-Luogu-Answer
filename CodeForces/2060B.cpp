@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 constexpr int N = 2e3 + 5;
-int T, n, m, a[N], flag;
+int t, n, m, a[N], flag;
 pair<int, int> b[N];
 void solve() {
     memset(a, 0, sizeof a);
@@ -28,8 +28,8 @@ void solve() {
 }
 int main() {
     ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-    cin >> T;
-    while (T--) {
+    cin >> t;
+    while (t--) {
         solve();
     }
     return 0;

@@ -5,8 +5,8 @@ signed main() {
     ios::sync_with_stdio(false), cin.tie(0);
     freopen("string.in", "r", stdin);
     freopen("string.out", "w", stdout);
-    int n, m, T;
-    cin >> n >> m >> T;
+    int n, m, t;
+    cin >> n >> m >> t;
     string A0, B0;
     cin >> A0 >> B0;
     const unsigned long long maxn = 1e18;
@@ -24,7 +24,7 @@ signed main() {
             s[k] = s[k-1] * 2;
         }
     }
-    while (T--) {
+    while (t--) {
         unsigned long long x;
         cin >> x;
         int k = 935;

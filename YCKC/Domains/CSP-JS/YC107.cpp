@@ -1,63 +1,89 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <algorithm>
 using namespace std;
-bool diff(vector <int> nums) {
-    set <int> st;
-    for (int it : nums) {
-        st.insert(it);
+
+// 判断骰子组合的等级和总和
+pair<int, int> evaluate(int dice[]) {
+    // 复制并排序，方便判断组合类型
+    int temp[3] = {dice[0], dice[1], dice[2]};
+    sort(temp, temp + 3);
+    
+    int sum = temp[0] + temp[1] + temp[2]; // 点数总和
+    
+    // 判断是否为三个一样的点数
+    if (temp[0] == temp[1] && temp[1] == temp[2]) {
+        return {4, sum};
     }
-    return st.size() == 2;
+    
+    // 判断是否为三个连续的点数
+    if (temp[0] + 1 == temp[1] && temp[1] + 1 == temp[2]) {
+        return {3, sum};
+    }
+    
+    // 判断是否为两个一样的点数和另一个不一样的点数
+    if (temp[0] == temp[1] || temp[1] == temp[2]) {
+        return {2, sum};
+    }
+    
+    // 其他情况
+    return {1, sum};
 }
-bool lian(vector <int> nums) {
-    sort(nums.begin(), nums.end());
-    int minn = *min_element(nums.begin(), nums.end()), maxn = *max_element(nums.begin(), nums.end());
-    int iter = 0;
-    for (int i = minn; i <= maxn; i++) {
-        if (nums[iter] != i) return false;
-        iter++;
-    }
-    return true;
+
+// 检查是否为2 3 5（顺序无关）
+bool is235(int dice[]) {
+    int temp[3] = {dice[0], dice[1], dice[2]};
+    sort(temp, temp + 3);
+    return (temp[0] == 2 && temp[1] == 3 && temp[2] == 5);
 }
-int levelchecker(int a, int b, int c) {
-    if (a == 2 && b == 3 && c == 5) {
-        return 5;
-    }
-    else if (a == b && b == c) {
-        return 4;
-    }
-    else if (lian({a, b, c})) {
-        return 3;
-    }
-    else if (diff({a, b, c})) {
-        return 2;
-    }
-    else return 1;
-}
+
 int main() {
-    ios::sync_with_stdio(false), cin.tie(0);
-    int x, y, z;
-    int a, b, c;
-    cin >> x >> y >> z >> a >> b >> c;
-    int levela = levelchecker(x, y, z), levelb = levelchecker(a, b, c);
-    if (levela == levelb) {
-        int suma = x + y + z, sumb = a + b + c;
-        if (suma > sumb) {
-            cout << "A";
-            return 0;
-        }
-        else if (sumb > suma) {
-            cout << "B";
-            return 0;
-        }
-        else if (sumb == suma) {
-            cout << "B";
-            return 0;
+    int diceA[3], diceB[3];
+    
+    // 输入两组骰子点数
+    cin >> diceA[0] >> diceA[1] >> diceA[2];
+    cin >> diceB[0] >> diceB[1] >> diceB[2];
+    
+    // 获取等级和总和
+    pair<int, int> resultA = evaluate(diceA);
+    pair<int, int> resultB = evaluate(diceB);
+    
+    int levelA = resultA.first;  // A的组合等级
+    int sumA = resultA.second;   // A的点数和
+    int levelB = resultB.first;  // B的组合等级
+    int sumB = resultB.second;   // B的点数和
+    
+    // 处理特殊规则：2 3 5 vs 三个一样的点数
+    bool A_is_235 = is235(diceA);
+    bool B_is_235 = is235(diceB);
+    
+    if (A_is_235 && levelB == 4) {
+        // A是2 3 5，B是三个一样的点数，A获胜
+        cout << "A" << endl;
+        return 0;
+    }
+    
+    if (B_is_235 && levelA == 4) {
+        // B是2 3 5，A是三个一样的点数，B获胜
+        cout << "B" << endl;
+        return 0;
+    }
+    
+    // 常规比较规则
+    if (levelA > levelB) {
+        // A的等级更高
+        cout << "A" << endl;
+    } else if (levelA < levelB) {
+        // B的等级更高
+        cout << "B" << endl;
+    } else {
+        // 等级相同，比较总和
+        if (sumA > sumB) {
+            cout << "A" << endl;
+        } else {
+            // sumA <= sumB，包括平局情况（输出B）
+            cout << "B" << endl;
         }
     }
-    else if (levela > levelb) {
-        cout << "A";
-    }
-    else if (levelb > levela) {
-        cout << "B";
-    }
+    
     return 0;
-}
+} // 看AI咋写的参考参考

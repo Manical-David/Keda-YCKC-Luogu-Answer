@@ -1,19 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct Node {
+struct node {
     int sz;
     int v[2];
     int c[2];
-    Node(){ sz = 0; v[0]=v[1]=0; c[0]=c[1]=0; }
+    node(){ sz = 0; v[0]=v[1]=0; c[0]=c[1]=0; }
 };
 
 int n;
 vector<int> a;
-vector<Node> seg;
+vector<node> seg;
 
-Node mergeNode(const Node &A, const Node &B) {
-    Node R;
+node mergeNode(const node &A, const node &B) {
+    node R;
     pair<int,int> tmp[4];
     int tsz = 0;
     for (int i = 0; i < A.sz; ++i) tmp[tsz++] = {A.v[i], A.c[i]};
@@ -59,12 +59,12 @@ void build(int idx, int l, int r) {
     seg[idx] = mergeNode(seg[idx<<1], seg[idx<<1|1]);
 }
 
-Node querySeg(int idx, int l, int r, int ql, int qr) {
-    if (qr < l || r < ql) return Node();
+node querySeg(int idx, int l, int r, int ql, int qr) {
+    if (qr < l || r < ql) return node();
     if (ql <= l && r <= qr) return seg[idx];
     int mid = (l + r) >> 1;
-    Node left = querySeg(idx<<1, l, mid, ql, qr);
-    Node right = querySeg(idx<<1|1, mid+1, r, ql, qr);
+    node left = querySeg(idx<<1, l, mid, ql, qr);
+    node right = querySeg(idx<<1|1, mid+1, r, ql, qr);
     return mergeNode(left, right);
 }
 
@@ -81,14 +81,14 @@ int main() {
         unordered_map<int, vector<int>> pos;
         pos.reserve(n*2);
         for (int i = 1; i <= n; ++i) pos[a[i]].push_back(i);
-        seg.assign(4*(n+5), Node());
+        seg.assign(4*(n+5), node());
         build(1, 1, n);
         while (q--) {
             int l, r;
             cin >> l >> r;
             int len = r - l + 1;
             int thr = len / 3;
-            Node cand = querySeg(1, 1, n, l, r);
+            node cand = querySeg(1, 1, n, l, r);
             vector<int> ans;
             for (int i = 0; i < cand.sz; ++i) {
                 int val = cand.v[i];
